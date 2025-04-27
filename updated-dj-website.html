@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DJ Portfolio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+        }
+        
+        body {
+            background-color: #121212;
+            color: #fff;
+            line-height: 1.6;
+        }
+        
+        .container {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        nav {
+            width: 100%;
+            padding: 1rem 0;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid #333;
+            position: sticky;
+            top: 0;
+            background-color: rgba(18, 18, 18, 0.95);
+            z-index: 100;
+            backdrop-filter: blur(5px);
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .nav-logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            letter-spacing: 2px;
+            color: #fff;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .nav-logo span {
+            color: #4B8BF5;
+        }
+        
+        .logo-img {
+            height: 40px;
+            width: auto;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+        
+        .nav-link {
+            color: #fff;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.9rem;
+            transition: color 0.3s ease;
+            padding: 0.5rem 0;
+            position: relative;
+        }
+        
+        .nav-link:hover, .nav-link.active {
+            color: #4B8BF5;
+        }
+        
+        .nav-link.active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: #4B8BF5;
+        }
+        
+        section {
+            width: 100%;
+            margin-bottom: 4rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .hero {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .logo {
+            margin-bottom: 1.5rem;
+        }
+        
+        .logo h1 {
+            font-size: 4rem;
+            letter-spacing: 8px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+        
+        .accent {
+            color: #4B8BF5;
+        }
+        
+        .tagline {
+            font-size: 1.2rem;
+            color: #aaa;
+            letter-spacing: 2px;
+        }
+        
+        .profile-image {
+            width: 250px;
+            height: 250px;
+            background-color: #333;
+            border-radius: 50%;
+            margin: 2rem 0;
+            border: 3px solid #4B8BF5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #aaa;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(75, 139, 245, 0.3);
+        }
+
+        .profile-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .social-links {
+            display: flex;
+            flex-direction: row;
+            gap: 1rem;
+            margin: 2rem 0;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .social-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background-color: #222;
+            color: #fff;
+            text-decoration: none;
+            padding: 12px 20px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            border: 1px solid #333;
+            width: 150px;
+        }
+        
+        .social-button:hover {
+            background-color: #4B8BF5;
+            transform: translateY(-3px);
+            box-shadow: 0 4px 12px rgba(75, 139, 245, 0.3);
+        }
+        
+        .social-button i {
+            font-size: 1.2rem;
+        }
+        
+        .section-title {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            position: relative;
+            padding-bottom: 0.5rem;
+            text-align: center;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background-color: #4B8BF5;
+        }
+        
+        .dj-info {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+            padding: 2rem;
+            background-color: #1D1D1D;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .dj-info p {
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #ddd;
+        }
+        
+        .dj-info p:last-child {
+            margin-bottom: 0;
+        }
+        
+        /* Booking Page Styles */
+        .booking-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            width: 100%;
+            align-items: start;
+        }
+        
+        .booking-info {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        
+        .booking-description {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+        }
+        
+        .contact-info {
+            background-color: #222;
+            padding: 2rem;
+            border-radius: 8px;
+            border-left: 4px solid #4B8BF5;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .contact-item {
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .contact-item i {
+            color: #4B8BF5;
+            font-size: 1.2rem;
+            width: 20px;
+            text-align: center;
+        }
+        
+        .contact-label {
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        
+        .contact-value {
+            color: #ddd;
+        }
+        
+        .contact-value a {
+            color: #4B8BF5;
+            text-decoration: none;
+        }
+        
+        .contact-value a:hover {
+            text-decoration: underline;
+        }
+        
+        .image-gallery {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+        
+        .performance-image {
+            width: 100%;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+            position: relative;
+        }
+        
+        .performance-image img {
+            width: 100%;
+            display: block;
+            transition: transform 0.5s ease;
+        }
+        
+        .performance-image:hover img {
+            transform: scale(1.03);
+        }
+        
+        .image-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 100%);
+            padding: 1.5rem 1rem 0.8rem;
+            font-size: 0.9rem;
+            color: #fff;
+        }
+        
+        /* Rent Equipment Page Styles */
+        .rent-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            width: 100%;
+            align-items: start;
+        }
+        
+        .rent-info {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        
+        .rent-description {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+        }
+        
+        .equipment-category {
+            background-color: #222;
+            padding: 2rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            border-left: 4px solid #4B8BF5;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .equipment-category h3 {
+            color: #4B8BF5;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+        
+        .equipment-list {
+            list-style: none;
+        }
+        
+        .equipment-item {
+            margin-bottom: 1rem;
+            padding-left: 25px;
+            position: relative;
+        }
+        
+        .equipment-item:before {
+            content: "•";
+            color: #4B8BF5;
+            position: absolute;
+            left: 0;
+            font-size: 1.5rem;
+            line-height: 1;
+        }
+        
+        .setup-gallery {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+        
+        .setup-image {
+            width: 100%;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+            position: relative;
+        }
+        
+        .setup-image img {
+            width: 100%;
+            display: block;
+            transition: transform 0.5s ease;
+        }
+        
+        .setup-image:hover img {
+            transform: scale(1.03);
+        }
+        
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background-color: #4B8BF5;
+            color: #fff;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            text-decoration: none;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 99;
+        }
+        
+        .back-to-top.visible {
+            opacity: 1;
+        }
+        
+        .back-to-top:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+        }
+        
+        .footer {
+            margin-top: auto;
+            padding-top: 2rem;
+            font-size: 0.9rem;
+            color: #aaa;
+            text-align: center;
+            border-top: 1px solid #333;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .footer-link {
+            color: #aaa;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-link:hover {
+            color: #4B8BF5;
+        }
+        
+        .copyright {
+            margin-top: 1rem;
+        }
+        
+        .page {
+            display: none;
+            animation: fadeIn 0.5s ease forwards;
+        }
+        
+        .page.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @media (max-width: 768px) {
+            .logo h1 {
+                font-size: 2.5rem;
+            }
+            
+            .section-title {
+                font-size: 1.5rem;
+            }
+            
+            .social-links {
+                flex-direction: column;
+            }
+            
+            .social-button {
+                width: 100%;
+            }
+
+            .profile-image {
+                width: 200px;
+                height: 200px;
+            }
+            
+            .booking-container, .rent-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .image-gallery, .setup-gallery {
+                margin-top: 2rem;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Navigation functionality
+            const navLinks = document.querySelectorAll('.nav-link');
+            const pages = document.querySelectorAll('.page');
+            
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const pageId = this.getAttribute('href').substring(1);
+                    
+                    navLinks.forEach(link => link.classList.remove('active'));
+                    pages.forEach(page => page.classList.remove('active'));
+                    
+                    this.classList.add('active');
+                    document.getElementById(pageId).classList.add('active');
+                    
+                    // Scroll to top when changing pages
+                    window.scrollTo({
+                        top: 0,
+                        behavior: 'smooth'
+                    });
+                });
+            });
+            
+            // Back to top button
+            const backToTopButton = document.querySelector('.back-to-top');
+            
+            window.addEventListener('scroll', () => {
+                if (window.pageYOffset > 300) {
+                    backToTopButton.classList.add('visible');
+                } else {
+                    backToTopButton.classList.remove('visible');
+                }
+            });
+            
+            backToTopButton.addEventListener('click', (e) => {
+                e.preventDefault();
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="container">
+        <nav>
+            <div class="nav-container">
+                <a href="#" class="nav-logo">
+                    <img src="Logo_NSR.png" alt="DJ Logo" class="logo-img"/>
+                    NSR <span>Music</span>
+                </a>
+                <div class="nav-links">
+                    <a href="#home" class="nav-link active">Home</a>
+                    <a href="#booking" class="nav-link">Booking</a>
+                    <a href="#rent" class="nav-link">Rent your event</a>
+                </div>
+            </div>
+        </nav>
+        
+        <div id="home" class="page active">
+            <section class="hero">
+                <div class="logo">
+                    <h1>NSR <span class="accent">Music</span></h1>
+                </div>
+                <div class="tagline">
+                    Electronic Music Producer & DJ
+                </div>
+                
+                <div class="profile-image">
+                    <img src="profile_pic_nsr.jpg" alt="DJ Profile Image" />
+                </div>
+                
+                <div class="social-links">
+                    <a href="#" class="social-button">
+                        <i class="fab fa-instagram"></i>
+                        <span>Instagram</span>
+                    </a>
+                    <a href="#" class="social-button">
+                        <i class="fab fa-spotify"></i>
+                        <span>Spotify</span>
+                    </a>
+                    <a href="#" class="social-button">
+                        <i class="fab fa-soundcloud"></i>
+                        <span>SoundCloud</span>
+                    </a>
+                </div>
+            </section>
+            
+            <section>
+                <h2 class="section-title">Über mich</h2>
+                <div class="dj-info">
+                    <p>
+                        Seit über 10 Jahren spiele ich als DJ und Musikproduzent auf Events aller Art. Meine Leidenschaft ist es, Menschen mit der richtigen Musik in Bewegung zu bringen und eine unvergessliche Atmosphäre zu schaffen.
+                    </p>
+                    <p>
+                        Mein Stil bewegt sich zwischen Electronic, House und Techno – stets mit einem ausgewogenen Mix aus bekannten Tracks und überraschenden Klängen, die für einen einzigartigen Sound sorgen. Ob auf Festivals, in Clubs oder bei privaten Veranstaltungen – ich passe meine Sets immer dem jeweiligen Publikum und der Location an.
+                    </p>
+                    <p>
+                        Neben meinen eigenen Produktionen, die regelmäßig auf renommierten Labels erscheinen, biete ich auch Equipment-Verleih und maßgeschneiderte Sound- und Lichtkonzepte für Events aller Größen an.
+                    </p>
+                </div>
+            </section>
+        </div>
+        
+        <div id="booking" class="page">
+            <section>
+                <h2 class="section-title">Booking</h2>
+                <div class="booking-container">
+                    <div class="booking-info">
+                        <p class="booking-description">
+                            Buche DJ NAME für deinen nächsten Event, sei es ein Festival, Club-Auftritt oder private Veranstaltung. Mit mehrjähriger Erfahrung und einer einzigartigen Mischung aus Electronic, House und Techno sorge ich für die richtige Stimmung auf jedem Event.
+                        </p>
+                        <p class="booking-description">
+                            Ich bin flexibel und passe meinen Sound an unterschiedliche Locations und Publikum an. Egal ob intime Veranstaltung oder große Party - ich sorge für Stimmung.
+                        </p>
+                        <div class="contact-info">
+                            <div class="contact-item">
+                                <i class="fas fa-envelope"></i>
+                                <span class="contact-label">Email:</span>
+                                <span class="contact-value"><a href="mailto:booking@djname.com">booking@djname.com</a></span>
+                            </div>
+                            <div class="contact-item">
+                                <i class="fas fa-phone"></i>
+                                <span class="contact-label">Telefon:</span>
+                                <span class="contact-value">+49 123 456789</span>
+                            </div>
+                            <div class="contact-item">
+                                <i class="fas fa-calendar-alt"></i>
+                                <span class="contact-label">Antwortzeit:</span>
+                                <span class="contact-value">Innerhalb von 48 Stunden</span>
+                            </div>
+                            <div class="contact-item">
+                                <i class="fas fa-globe"></i>
+                                <span class="contact-label">Booking Agentur:</span>
+                                <span class="contact-value">Global Beats Agency</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="image-gallery">
+                        <div class="performance-image">
+                            <img src="performance2.JPG" alt="DJ Performance" />
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+        
+        <div id="rent" class="page">
+            <section>
+                <h2 class="section-title">Rent your event</h2>
+                <div class="rent-container">
+                    <div class="rent-info">
+                        <p class="rent-description">
+                            Plane dein nächstes Event mit professionellem Sound- und Licht-Equipment! Ich biete hochwertiges Veranstaltungsequipment für Events jeder Größe – vom kleinen Geburtstag bis zur großen Party.
+                        </p>
+                        <p class="rent-description">
+                            Auf Wunsch biete ich auch Full-Service mit Aufbau, Betreuung und Abbau, damit sie sich voll auf ihr Event konzentrieren können
+                        </p>
+                        
+                        <div class="equipment-category">
+                            <h3>Sound-Equipment</h3>
+                            <ul class="equipment-list">
+                                <li class="equipment-item">PA-Systeme verschiedener Größen</li>
+                                <li class="equipment-item">Aktive Lautsprecher von Fame</li>
+                                <li class="equipment-item">Subwoofer für kraftvolle Bässe</li>
+                                <li class="equipment-item">Komplett-Sets inkl. Stative und Verkabelung</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="equipment-category">
+                            <h3>Licht-Equipment</h3>
+                            <ul class="equipment-list">
+                                <li class="equipment-item">LED Par Scheinwerfer verschiedener Größen</li>
+                                <li class="equipment-item">Moving Heads für dynamische Lichteffekte</li>
+                                <li class="equipment-item">Nebelmaschinen</li>
+                                <li class="equipment-item">Ambiente-Beleuchtung und dekorative Lichtelemente</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="contact-info">
+                            <div class="contact-item">
+                                <i class="fas fa-envelope"></i>
+                                <span class="contact-label">Email:</span>
+                                <span class="contact-value"><a href="mailto:equipment@djname.com">equipment@djname.com</a></span>
+                            </div>
+                            <div class="contact-item">
+                                <i class="fas fa-phone"></i>
+                                <span class="contact-label">Telefon:</span>
+                                <span class="contact-value">+49 123 456789</span>
+                            </div>
+                            <div class="contact-item">
+                                <i class="fas fa-calendar-alt"></i>
+                                <span class="contact-label">Antwortzeit:</span>
+                                <span class="contact-value">Innerhalb von 24 Stunden</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="setup-gallery">
+                        <div class="setup-image">
+                            <img src="setup1.jpg" alt="Setup" />
+                            <div class="image-caption">Party Setup mit Sound- und Lichtanlage</div>
+                        </div>
+                        <div class="setup-image">
+                            <img src="setup2.jpg" alt="Setup" />
+                            <div class="image-caption">Setup auf einer Weihnachtsfeier </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+        
+        <div class="footer">
+            <div class="footer-links">
+                <a href="#" class="footer-link">Datenschutz</a>
+                <a href="#" class="footer-link">Impressum</a>
+                <a href="#" class="footer-link">Kontakt</a>
+            </div>
+            <div class="copyright">
+                &copy; 2025 DJ NAME • Alle Rechte vorbehalten
+            </div>
+        </div>
+        
+        <a href="#" class="back-to-top">
+            <i class="fas fa-arrow-up"></i>
+        </a>
+    </div>
+</body>
+</html>
