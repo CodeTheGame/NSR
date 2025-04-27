@@ -4,7 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DJ Portfolio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        /* Base styles and resets */
         * {
             margin: 0;
             padding: 0;
@@ -12,37 +14,55 @@
             font-family: 'Helvetica Neue', Arial, sans-serif;
         }
         
+        :root {
+            --accent-color: #4B8BF5;
+            --dark-bg: #121212;
+            --card-bg: #1D1D1D;
+            --border-color: #333;
+            scroll-behavior: smooth;
+        }
+        
         body {
-            background-color: #121212;
+            background-color: var(--dark-bg);
             color: #fff;
             line-height: 1.6;
         }
         
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+        
+        /* Layout and container */
         .container {
             display: flex;
             flex-direction: column;
             min-height: 100vh;
-            padding: 2rem;
+            padding: 1rem;
             max-width: 1200px;
             margin: 0 auto;
+            width: 95%;
         }
         
+        /* Navigation */
         nav {
             width: 100%;
             padding: 1rem 0;
             margin-bottom: 2rem;
-            border-bottom: 1px solid #333;
+            border-bottom: 1px solid var(--border-color);
             position: sticky;
             top: 0;
             background-color: rgba(18, 18, 18, 0.95);
             z-index: 100;
             backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
         }
         
         .nav-container {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            flex-wrap: wrap;
         }
         
         .nav-logo {
@@ -57,7 +77,7 @@
         }
         
         .nav-logo span {
-            color: #4B8BF5;
+            color: var(--accent-color);
         }
         
         .logo-img {
@@ -67,7 +87,9 @@
         
         .nav-links {
             display: flex;
-            gap: 2rem;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            margin-top: 0.5rem;
         }
         
         .nav-link {
@@ -82,7 +104,7 @@
         }
         
         .nav-link:hover, .nav-link.active {
-            color: #4B8BF5;
+            color: var(--accent-color);
         }
         
         .nav-link.active::after {
@@ -92,9 +114,20 @@
             left: 0;
             width: 100%;
             height: 2px;
-            background-color: #4B8BF5;
+            background-color: var(--accent-color);
         }
         
+        /* Mobile menu toggle - hidden by default */
+        .mobile-menu-toggle {
+            display: none;
+            color: white;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        /* Common section styles */
         section {
             width: 100%;
             margin-bottom: 4rem;
@@ -103,6 +136,7 @@
             align-items: center;
         }
         
+        /* Hero section */
         .hero {
             display: flex;
             flex-direction: column;
@@ -116,29 +150,29 @@
         }
         
         .logo h1 {
-            font-size: 4rem;
-            letter-spacing: 8px;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            letter-spacing: clamp(4px, 1vw, 8px);
             font-weight: 700;
             text-transform: uppercase;
         }
         
         .accent {
-            color: #4B8BF5;
+            color: var(--accent-color);
         }
         
         .tagline {
-            font-size: 1.2rem;
+            font-size: clamp(1rem, 2vw, 1.2rem);
             color: #aaa;
             letter-spacing: 2px;
         }
         
         .profile-image {
-            width: 250px;
-            height: 250px;
+            width: clamp(180px, 30vw, 250px);
+            height: clamp(180px, 30vw, 250px);
             background-color: #333;
             border-radius: 50%;
             margin: 2rem 0;
-            border: 3px solid #4B8BF5;
+            border: 3px solid var(--accent-color);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -153,6 +187,7 @@
             object-fit: cover;
         }
         
+        /* Social links */
         .social-links {
             display: flex;
             flex-direction: row;
@@ -174,11 +209,12 @@
             border-radius: 5px;
             transition: all 0.3s ease;
             border: 1px solid #333;
-            width: 150px;
+            width: clamp(120px, 40vw, 150px);
+            word-break: keep-all;
         }
         
         .social-button:hover {
-            background-color: #4B8BF5;
+            background-color: var(--accent-color);
             transform: translateY(-3px);
             box-shadow: 0 4px 12px rgba(75, 139, 245, 0.3);
         }
@@ -187,8 +223,9 @@
             font-size: 1.2rem;
         }
         
+        /* Section titles */
         .section-title {
-            font-size: 2rem;
+            font-size: clamp(1.5rem, 3vw, 2rem);
             margin-bottom: 2rem;
             text-transform: uppercase;
             letter-spacing: 3px;
@@ -205,22 +242,24 @@
             transform: translateX(-50%);
             width: 80px;
             height: 3px;
-            background-color: #4B8BF5;
+            background-color: var(--accent-color);
         }
         
+        /* DJ info section */
         .dj-info {
             max-width: 800px;
             margin: 0 auto;
             text-align: center;
             padding: 2rem;
-            background-color: #1D1D1D;
+            background-color: var(--card-bg);
             border-radius: 8px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            width: 100%;
         }
         
         .dj-info p {
             margin-bottom: 1rem;
-            font-size: 1.1rem;
+            font-size: clamp(1rem, 2vw, 1.1rem);
             line-height: 1.8;
             color: #ddd;
         }
@@ -232,7 +271,7 @@
         /* Booking Page Styles */
         .booking-container {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: 1fr;
             gap: 3rem;
             width: 100%;
             align-items: start;
@@ -245,7 +284,7 @@
         }
         
         .booking-description {
-            font-size: 1.1rem;
+            font-size: clamp(1rem, 2vw, 1.1rem);
             line-height: 1.7;
             margin-bottom: 1.5rem;
         }
@@ -254,22 +293,24 @@
             background-color: #222;
             padding: 2rem;
             border-radius: 8px;
-            border-left: 4px solid #4B8BF5;
+            border-left: 4px solid var(--accent-color);
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
         
         .contact-item {
             margin-bottom: 1rem;
             display: flex;
-            align-items: center;
+            align-items: flex-start;
             gap: 10px;
+            flex-wrap: wrap;
         }
         
         .contact-item i {
-            color: #4B8BF5;
+            color: var(--accent-color);
             font-size: 1.2rem;
             width: 20px;
             text-align: center;
+            flex-shrink: 0;
         }
         
         .contact-label {
@@ -279,10 +320,11 @@
         
         .contact-value {
             color: #ddd;
+            word-break: break-word;
         }
         
         .contact-value a {
-            color: #4B8BF5;
+            color: var(--accent-color);
             text-decoration: none;
         }
         
@@ -303,10 +345,13 @@
             overflow: hidden;
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
             position: relative;
+            aspect-ratio: 16/9;
         }
         
         .performance-image img {
             width: 100%;
+            height: 100%;
+            object-fit: cover;
             display: block;
             transition: transform 0.5s ease;
         }
@@ -329,7 +374,7 @@
         /* Rent Equipment Page Styles */
         .rent-container {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: 1fr;
             gap: 3rem;
             width: 100%;
             align-items: start;
@@ -342,7 +387,7 @@
         }
         
         .rent-description {
-            font-size: 1.1rem;
+            font-size: clamp(1rem, 2vw, 1.1rem);
             line-height: 1.7;
             margin-bottom: 1.5rem;
         }
@@ -352,12 +397,12 @@
             padding: 2rem;
             border-radius: 8px;
             margin-bottom: 2rem;
-            border-left: 4px solid #4B8BF5;
+            border-left: 4px solid var(--accent-color);
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
         
         .equipment-category h3 {
-            color: #4B8BF5;
+            color: var(--accent-color);
             margin-bottom: 1rem;
             font-size: 1.3rem;
         }
@@ -374,7 +419,7 @@
         
         .equipment-item:before {
             content: "•";
-            color: #4B8BF5;
+            color: var(--accent-color);
             position: absolute;
             left: 0;
             font-size: 1.5rem;
@@ -394,10 +439,13 @@
             overflow: hidden;
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
             position: relative;
+            aspect-ratio: 16/9;
         }
         
         .setup-image img {
             width: 100%;
+            height: 100%;
+            object-fit: cover;
             display: block;
             transition: transform 0.5s ease;
         }
@@ -406,13 +454,14 @@
             transform: scale(1.03);
         }
         
+        /* Back to top button */
         .back-to-top {
             position: fixed;
             bottom: 30px;
             right: 30px;
             width: 50px;
             height: 50px;
-            background-color: #4B8BF5;
+            background-color: var(--accent-color);
             color: #fff;
             border-radius: 50%;
             display: flex;
@@ -435,13 +484,14 @@
             box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
         }
         
+        /* Footer */
         .footer {
             margin-top: auto;
             padding-top: 2rem;
             font-size: 0.9rem;
             color: #aaa;
             text-align: center;
-            border-top: 1px solid #333;
+            border-top: 1px solid var(--border-color);
         }
         
         .footer-links {
@@ -449,22 +499,26 @@
             justify-content: center;
             gap: 2rem;
             margin-bottom: 1.5rem;
+            flex-wrap: wrap;
         }
         
         .footer-link {
             color: #aaa;
             text-decoration: none;
             transition: color 0.3s ease;
+            padding: 0.5rem;
         }
         
         .footer-link:hover {
-            color: #4B8BF5;
+            color: var(--accent-color);
         }
         
         .copyright {
             margin-top: 1rem;
+            padding: 0 1rem;
         }
         
+        /* Page transitions */
         .page {
             display: none;
             animation: fadeIn 0.5s ease forwards;
@@ -479,83 +533,76 @@
             to { opacity: 1; transform: translateY(0); }
         }
         
-        @media (max-width: 768px) {
-            .logo h1 {
-                font-size: 2.5rem;
-            }
-            
-            .section-title {
-                font-size: 1.5rem;
-            }
-            
-            .social-links {
-                flex-direction: column;
-            }
-            
-            .social-button {
-                width: 100%;
-            }
-
-            .profile-image {
-                width: 200px;
-                height: 200px;
+        /* Media queries for responsive design */
+        @media (min-width: 768px) {
+            .container {
+                padding: 2rem;
             }
             
             .booking-container, .rent-container {
-                grid-template-columns: 1fr;
+                grid-template-columns: 1fr 1fr;
             }
             
-            .image-gallery, .setup-gallery {
-                margin-top: 2rem;
+            .nav-container {
+                flex-wrap: nowrap;
+            }
+            
+            .nav-links {
+                margin-top: 0;
+            }
+        }
+        
+        @media (max-width: 767px) {
+            .mobile-menu-toggle {
+                display: block;
+            }
+            
+            .nav-links {
+                width: 100%;
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.5s ease;
+                flex-direction: column;
+                align-items: center;
+                gap: 1rem;
+            }
+            
+            .nav-links.active {
+                max-height: 200px;
+            }
+            
+            .contact-item {
+                flex-direction: column;
+            }
+            
+            .profile-image {
+                margin: 1.5rem 0;
+            }
+            
+            .social-links {
+                gap: 0.5rem;
+            }
+            
+            .social-button {
+                width: calc(50% - 0.5rem);
+            }
+            
+            .back-to-top {
+                bottom: 15px;
+                right: 15px;
+                width: 40px;
+                height: 40px;
+            }
+            
+            .footer-links {
+                gap: 1rem;
+            }
+            
+            .dj-info, .contact-info, .equipment-category {
+                padding: 1.5rem;
             }
         }
     </style>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Navigation functionality
-            const navLinks = document.querySelectorAll('.nav-link');
-            const pages = document.querySelectorAll('.page');
-            
-            navLinks.forEach(link => {
-                link.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const pageId = this.getAttribute('href').substring(1);
-                    
-                    navLinks.forEach(link => link.classList.remove('active'));
-                    pages.forEach(page => page.classList.remove('active'));
-                    
-                    this.classList.add('active');
-                    document.getElementById(pageId).classList.add('active');
-                    
-                    // Scroll to top when changing pages
-                    window.scrollTo({
-                        top: 0,
-                        behavior: 'smooth'
-                    });
-                });
-            });
-            
-            // Back to top button
-            const backToTopButton = document.querySelector('.back-to-top');
-            
-            window.addEventListener('scroll', () => {
-                if (window.pageYOffset > 300) {
-                    backToTopButton.classList.add('visible');
-                } else {
-                    backToTopButton.classList.remove('visible');
-                }
-            });
-            
-            backToTopButton.addEventListener('click', (e) => {
-                e.preventDefault();
-                window.scrollTo({
-                    top: 0,
-                    behavior: 'smooth'
-                });
-            });
-        });
-    </script>
 </head>
 <body>
     <div class="container">
@@ -565,6 +612,9 @@
                     <img src="Logo_NSR.png" alt="DJ Logo" class="logo-img"/>
                     NSR <span>Music</span>
                 </a>
+                <button class="mobile-menu-toggle" aria-label="Menü öffnen">
+                    <i class="fas fa-bars"></i>
+                </button>
                 <div class="nav-links">
                     <a href="#home" class="nav-link active">Home</a>
                     <a href="#booking" class="nav-link">Booking</a>
@@ -583,11 +633,11 @@
                 </div>
                 
                 <div class="profile-image">
-                    <img src="profile_pic_nsr.jpg" alt="DJ Profile Image" />
+                    <img src="profile_pic_nsr.jpg" alt="DJ Profile Image" loading="lazy" />
                 </div>
                 
                 <div class="social-links">
-                    <a href="https://www.instagram.com/nsrmusics/" class="social-button "target="_blank" rel="noopener noreferrer">
+                    <a href="https://www.instagram.com/nsrmusics/" class="social-button" target="_blank" rel="noopener noreferrer">
                         <i class="fab fa-instagram"></i>
                         <span>Instagram</span>
                     </a>
@@ -654,7 +704,7 @@
                     </div>
                     <div class="image-gallery">
                         <div class="performance-image">
-                            <img src="performance2.JPG" alt="DJ Performance" />
+                            <img src="performance2.JPG" alt="DJ Performance" loading="lazy" />
                         </div>
                     </div>
                 </div>
@@ -713,12 +763,12 @@
                     </div>
                     <div class="setup-gallery">
                         <div class="setup-image">
-                            <img src="setup1.jpg" alt="Setup" />
+                            <img src="setup1.jpg" alt="Setup" loading="lazy" />
                             <div class="image-caption">Party Setup mit Sound- und Lichtanlage</div>
                         </div>
                         <div class="setup-image">
-                            <img src="setup2.jpg" alt="Setup" />
-                            <div class="image-caption">Setup auf einer Weihnachtsfeier </div>
+                            <img src="setup2.jpg" alt="Setup" loading="lazy" />
+                            <div class="image-caption">Setup auf einer Weihnachtsfeier</div>
                         </div>
                     </div>
                 </div>
@@ -740,5 +790,64 @@
             <i class="fas fa-arrow-up"></i>
         </a>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mobile menu toggle
+            const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
+            const navLinks = document.querySelector('.nav-links');
+            
+            mobileMenuToggle.addEventListener('click', function() {
+                navLinks.classList.toggle('active');
+                const isExpanded = navLinks.classList.contains('active');
+                mobileMenuToggle.setAttribute('aria-expanded', isExpanded);
+            });
+            
+            // Navigation functionality
+            const navLinkElements = document.querySelectorAll('.nav-link');
+            const pages = document.querySelectorAll('.page');
+            
+            navLinkElements.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const pageId = this.getAttribute('href').substring(1);
+                    
+                    navLinkElements.forEach(link => link.classList.remove('active'));
+                    pages.forEach(page => page.classList.remove('active'));
+                    
+                    this.classList.add('active');
+                    document.getElementById(pageId).classList.add('active');
+                    
+                    // Close mobile menu when a link is clicked
+                    navLinks.classList.remove('active');
+                    
+                    // Scroll to top when changing pages
+                    window.scrollTo({
+                        top: 0,
+                        behavior: 'smooth'
+                    });
+                });
+            });
+            
+            // Back to top button
+            const backToTopButton = document.querySelector('.back-to-top');
+            
+            window.addEventListener('scroll', () => {
+                if (window.pageYOffset > 300) {
+                    backToTopButton.classList.add('visible');
+                } else {
+                    backToTopButton.classList.remove('visible');
+                }
+            });
+            
+            backToTopButton.addEventListener('click', (e) => {
+                e.preventDefault();
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
 </body>
 </html>
