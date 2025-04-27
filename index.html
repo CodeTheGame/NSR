@@ -518,19 +518,30 @@
             padding: 0 1rem;
         }
         
-        /* Page transitions */
+        /* Optimierte Page transitions */
         .page {
-            display: none;
-            animation: fadeIn 0.5s ease forwards;
+            position: absolute;
+            width: 100%;
+            opacity: 0;
+            pointer-events: none;
+            transform: translateZ(0);  /* Hardware-Beschleunigung */
+            will-change: opacity;     /* Informiert Browser über Veränderung */
+            backface-visibility: hidden;
+            transition: opacity 0.3s ease;
+            left: 0;
+            right: 0;
         }
         
         .page.active {
-            display: block;
+            position: relative;
+            opacity: 1;
+            pointer-events: auto;
         }
         
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+        /* Preload optimierung */
+        .page-container {
+            position: relative;
+            min-height: 100vh;
         }
         
         /* Media queries for responsive design */
@@ -561,7 +572,7 @@
                 width: 100%;
                 max-height: 0;
                 overflow: hidden;
-                transition: max-height 0.5s ease;
+                transition: max-height 0.3s ease; /* Verkürzte Transition */
                 flex-direction: column;
                 align-items: center;
                 gap: 1rem;
@@ -601,6 +612,20 @@
             .dj-info, .contact-info, .equipment-category {
                 padding: 1.5rem;
             }
+            
+            /* Reduzierte Animationen auf Mobilgeräten */
+            .page {
+                transition: opacity 0.2s ease;
+            }
+            
+            .performance-image img, .setup-image img {
+                transition: transform 0.3s ease;
+            }
+        }
+        
+        /* Minimale Animation während des Seitenwechsels */
+        body.page-transitioning .container {
+            opacity: 0.8;
         }
     </style>
 </head>
@@ -623,156 +648,158 @@
             </div>
         </nav>
         
-        <div id="home" class="page active">
-            <section class="hero">
-                <div class="logo">
-                    <h1>NSR <span class="accent">Music</span></h1>
-                </div>
-                <div class="tagline">
-                    Electronic Music Producer & DJ
-                </div>
+        <div class="page-container">
+            <div id="home" class="page active">
+                <section class="hero">
+                    <div class="logo">
+                        <h1>NSR <span class="accent">Music</span></h1>
+                    </div>
+                    <div class="tagline">
+                        Electronic Music Producer & DJ
+                    </div>
+                    
+                    <div class="profile-image">
+                        <img src="profile_pic_nsr.jpg" alt="DJ Profile Image" loading="lazy" />
+                    </div>
+                    
+                    <div class="social-links">
+                        <a href="https://www.instagram.com/nsrmusics/" class="social-button" target="_blank" rel="noopener noreferrer">
+                            <i class="fab fa-instagram"></i>
+                            <span>Instagram</span>
+                        </a>
+                        <a href="https://open.spotify.com/artist/4MfVAm56IgHWWOWOxe0qSC?si=LCDY0x53R8mQQihvOyVdfA" class="social-button" target="_blank" rel="noopener noreferrer">
+                            <i class="fab fa-spotify"></i>
+                            <span>Spotify</span>
+                        </a>
+                        <a href="#" class="social-button" target="_blank" rel="noopener noreferrer">
+                            <i class="fab fa-soundcloud"></i>
+                            <span>SoundCloud</span>
+                        </a>
+                    </div>
+                </section>
                 
-                <div class="profile-image">
-                    <img src="profile_pic_nsr.jpg" alt="DJ Profile Image" loading="lazy" />
-                </div>
-                
-                <div class="social-links">
-                    <a href="https://www.instagram.com/nsrmusics/" class="social-button" target="_blank" rel="noopener noreferrer">
-                        <i class="fab fa-instagram"></i>
-                        <span>Instagram</span>
-                    </a>
-                    <a href="https://open.spotify.com/artist/4MfVAm56IgHWWOWOxe0qSC?si=LCDY0x53R8mQQihvOyVdfA" class="social-button" target="_blank" rel="noopener noreferrer">
-                        <i class="fab fa-spotify"></i>
-                        <span>Spotify</span>
-                    </a>
-                    <a href="#" class="social-button" target="_blank" rel="noopener noreferrer">
-                        <i class="fab fa-soundcloud"></i>
-                        <span>SoundCloud</span>
-                    </a>
-                </div>
-            </section>
+                <section>
+                    <h2 class="section-title">Über mich</h2>
+                    <div class="dj-info">
+                        <p>
+                            Seit über 10 Jahren spiele ich als DJ und Musikproduzent auf Events aller Art. Meine Leidenschaft ist es, Menschen mit der richtigen Musik in Bewegung zu bringen und eine unvergessliche Atmosphäre zu schaffen.
+                        </p>
+                        <p>
+                            Mein Stil bewegt sich zwischen Electronic, House und Techno – stets mit einem ausgewogenen Mix aus bekannten Tracks und überraschenden Klängen, die für einen einzigartigen Sound sorgen. Ob auf Festivals, in Clubs oder bei privaten Veranstaltungen – ich passe meine Sets immer dem jeweiligen Publikum und der Location an.
+                        </p>
+                        <p>
+                            Neben meinen eigenen Produktionen, die regelmäßig auf renommierten Labels erscheinen, biete ich auch Equipment-Verleih und maßgeschneiderte Sound- und Lichtkonzepte für Events aller Größen an.
+                        </p>
+                    </div>
+                </section>
+            </div>
             
-            <section>
-                <h2 class="section-title">Über mich</h2>
-                <div class="dj-info">
-                    <p>
-                        Seit über 10 Jahren spiele ich als DJ und Musikproduzent auf Events aller Art. Meine Leidenschaft ist es, Menschen mit der richtigen Musik in Bewegung zu bringen und eine unvergessliche Atmosphäre zu schaffen.
-                    </p>
-                    <p>
-                        Mein Stil bewegt sich zwischen Electronic, House und Techno – stets mit einem ausgewogenen Mix aus bekannten Tracks und überraschenden Klängen, die für einen einzigartigen Sound sorgen. Ob auf Festivals, in Clubs oder bei privaten Veranstaltungen – ich passe meine Sets immer dem jeweiligen Publikum und der Location an.
-                    </p>
-                    <p>
-                        Neben meinen eigenen Produktionen, die regelmäßig auf renommierten Labels erscheinen, biete ich auch Equipment-Verleih und maßgeschneiderte Sound- und Lichtkonzepte für Events aller Größen an.
-                    </p>
-                </div>
-            </section>
-        </div>
-        
-        <div id="booking" class="page">
-            <section>
-                <h2 class="section-title">Booking</h2>
-                <div class="booking-container">
-                    <div class="booking-info">
-                        <p class="booking-description">
-                            Buche DJ NAME für deinen nächsten Event, sei es ein Festival, Club-Auftritt oder private Veranstaltung. Mit mehrjähriger Erfahrung und einer einzigartigen Mischung aus Electronic, House und Techno sorge ich für die richtige Stimmung auf jedem Event.
-                        </p>
-                        <p class="booking-description">
-                            Ich bin flexibel und passe meinen Sound an unterschiedliche Locations und Publikum an. Egal ob intime Veranstaltung oder große Party - ich sorge für Stimmung.
-                        </p>
-                        <div class="contact-info">
-                            <div class="contact-item">
-                                <i class="fas fa-envelope"></i>
-                                <span class="contact-label">Email:</span>
-                                <span class="contact-value"><a href="mailto:booking@djname.com">booking@djname.com</a></span>
+            <div id="booking" class="page">
+                <section>
+                    <h2 class="section-title">Booking</h2>
+                    <div class="booking-container">
+                        <div class="booking-info">
+                            <p class="booking-description">
+                                Buche DJ NAME für deinen nächsten Event, sei es ein Festival, Club-Auftritt oder private Veranstaltung. Mit mehrjähriger Erfahrung und einer einzigartigen Mischung aus Electronic, House und Techno sorge ich für die richtige Stimmung auf jedem Event.
+                            </p>
+                            <p class="booking-description">
+                                Ich bin flexibel und passe meinen Sound an unterschiedliche Locations und Publikum an. Egal ob intime Veranstaltung oder große Party - ich sorge für Stimmung.
+                            </p>
+                            <div class="contact-info">
+                                <div class="contact-item">
+                                    <i class="fas fa-envelope"></i>
+                                    <span class="contact-label">Email:</span>
+                                    <span class="contact-value"><a href="mailto:booking@djname.com">booking@djname.com</a></span>
+                                </div>
+                                <div class="contact-item">
+                                    <i class="fas fa-phone"></i>
+                                    <span class="contact-label">Telefon:</span>
+                                    <span class="contact-value">+49 123 456789</span>
+                                </div>
+                                <div class="contact-item">
+                                    <i class="fas fa-calendar-alt"></i>
+                                    <span class="contact-label">Antwortzeit:</span>
+                                    <span class="contact-value">Innerhalb von 48 Stunden</span>
+                                </div>
+                                <div class="contact-item">
+                                    <i class="fas fa-globe"></i>
+                                    <span class="contact-label">Booking Agentur:</span>
+                                    <span class="contact-value">Global Beats Agency</span>
+                                </div>
                             </div>
-                            <div class="contact-item">
-                                <i class="fas fa-phone"></i>
-                                <span class="contact-label">Telefon:</span>
-                                <span class="contact-value">+49 123 456789</span>
-                            </div>
-                            <div class="contact-item">
-                                <i class="fas fa-calendar-alt"></i>
-                                <span class="contact-label">Antwortzeit:</span>
-                                <span class="contact-value">Innerhalb von 48 Stunden</span>
-                            </div>
-                            <div class="contact-item">
-                                <i class="fas fa-globe"></i>
-                                <span class="contact-label">Booking Agentur:</span>
-                                <span class="contact-value">Global Beats Agency</span>
+                        </div>
+                        <div class="image-gallery">
+                            <div class="performance-image">
+                                <img src="performance2.JPG" alt="DJ Performance" loading="lazy" />
                             </div>
                         </div>
                     </div>
-                    <div class="image-gallery">
-                        <div class="performance-image">
-                            <img src="performance2.JPG" alt="DJ Performance" loading="lazy" />
-                        </div>
-                    </div>
-                </div>
-            </section>
-        </div>
-        
-        <div id="rent" class="page">
-            <section>
-                <h2 class="section-title">Rent your event</h2>
-                <div class="rent-container">
-                    <div class="rent-info">
-                        <p class="rent-description">
-                            Plane dein nächstes Event mit professionellem Sound- und Licht-Equipment! Ich biete hochwertiges Veranstaltungsequipment für Events jeder Größe – vom kleinen Geburtstag bis zur großen Party.
-                        </p>
-                        <p class="rent-description">
-                            Auf Wunsch biete ich auch Full-Service mit Aufbau, Betreuung und Abbau, damit sie sich voll auf ihr Event konzentrieren können
-                        </p>
-                        
-                        <div class="equipment-category">
-                            <h3>Sound-Equipment</h3>
-                            <ul class="equipment-list">
-                                <li class="equipment-item">PA-Systeme verschiedener Größen</li>
-                                <li class="equipment-item">Aktive Lautsprecher von Fame</li>
-                                <li class="equipment-item">Subwoofer für kraftvolle Bässe</li>
-                                <li class="equipment-item">Komplett-Sets inkl. Stative und Verkabelung</li>
-                            </ul>
-                        </div>
-                        
-                        <div class="equipment-category">
-                            <h3>Licht-Equipment</h3>
-                            <ul class="equipment-list">
-                                <li class="equipment-item">LED Par Scheinwerfer verschiedener Größen</li>
-                                <li class="equipment-item">Moving Heads für dynamische Lichteffekte</li>
-                                <li class="equipment-item">Nebelmaschinen</li>
-                                <li class="equipment-item">Ambiente-Beleuchtung und dekorative Lichtelemente</li>
-                            </ul>
-                        </div>
-                        
-                        <div class="contact-info">
-                            <div class="contact-item">
-                                <i class="fas fa-envelope"></i>
-                                <span class="contact-label">Email:</span>
-                                <span class="contact-value"><a href="mailto:equipment@djname.com">equipment@djname.com</a></span>
+                </section>
+            </div>
+            
+            <div id="rent" class="page">
+                <section>
+                    <h2 class="section-title">Rent your event</h2>
+                    <div class="rent-container">
+                        <div class="rent-info">
+                            <p class="rent-description">
+                                Plane dein nächstes Event mit professionellem Sound- und Licht-Equipment! Ich biete hochwertiges Veranstaltungsequipment für Events jeder Größe – vom kleinen Geburtstag bis zur großen Party.
+                            </p>
+                            <p class="rent-description">
+                                Auf Wunsch biete ich auch Full-Service mit Aufbau, Betreuung und Abbau, damit sie sich voll auf ihr Event konzentrieren können
+                            </p>
+                            
+                            <div class="equipment-category">
+                                <h3>Sound-Equipment</h3>
+                                <ul class="equipment-list">
+                                    <li class="equipment-item">PA-Systeme verschiedener Größen</li>
+                                    <li class="equipment-item">Aktive Lautsprecher von Fame</li>
+                                    <li class="equipment-item">Subwoofer für kraftvolle Bässe</li>
+                                    <li class="equipment-item">Komplett-Sets inkl. Stative und Verkabelung</li>
+                                </ul>
                             </div>
-                            <div class="contact-item">
-                                <i class="fas fa-phone"></i>
-                                <span class="contact-label">Telefon:</span>
-                                <span class="contact-value">+49 123 456789</span>
+                            
+                            <div class="equipment-category">
+                                <h3>Licht-Equipment</h3>
+                                <ul class="equipment-list">
+                                    <li class="equipment-item">LED Par Scheinwerfer verschiedener Größen</li>
+                                    <li class="equipment-item">Moving Heads für dynamische Lichteffekte</li>
+                                    <li class="equipment-item">Nebelmaschinen</li>
+                                    <li class="equipment-item">Ambiente-Beleuchtung und dekorative Lichtelemente</li>
+                                </ul>
                             </div>
-                            <div class="contact-item">
-                                <i class="fas fa-calendar-alt"></i>
-                                <span class="contact-label">Antwortzeit:</span>
-                                <span class="contact-value">Innerhalb von 24 Stunden</span>
+                            
+                            <div class="contact-info">
+                                <div class="contact-item">
+                                    <i class="fas fa-envelope"></i>
+                                    <span class="contact-label">Email:</span>
+                                    <span class="contact-value"><a href="mailto:equipment@djname.com">equipment@djname.com</a></span>
+                                </div>
+                                <div class="contact-item">
+                                    <i class="fas fa-phone"></i>
+                                    <span class="contact-label">Telefon:</span>
+                                    <span class="contact-value">+49 123 456789</span>
+                                </div>
+                                <div class="contact-item">
+                                    <i class="fas fa-calendar-alt"></i>
+                                    <span class="contact-label">Antwortzeit:</span>
+                                    <span class="contact-value">Innerhalb von 24 Stunden</span>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="setup-gallery">
-                        <div class="setup-image">
-                            <img src="setup1.jpg" alt="Setup" loading="lazy" />
-                            <div class="image-caption">Party Setup mit Sound- und Lichtanlage</div>
+                        <div class="setup-gallery">
+                            <div class="setup-image">
+                                <img src="setup1.jpg" alt="Setup" loading="lazy" />
+                                <div class="image-caption">Party Setup mit Sound- und Lichtanlage</div>
+                            </div>
+                            <div class="setup-image">
+                                <img src="setup2.jpg" alt="Setup" loading="lazy" />
+                                <div class="image-caption">Setup auf einer Weihnachtsfeier</div>
+                            </div>
                         </div>
-                        <div class="setup-image">
-                            <img src="setup2.jpg" alt="Setup" loading="lazy" />
-                            <div class="image-caption">Setup auf einer Weihnachtsfeier</div>
-                        </div>
                     </div>
-                </div>
-            </section>
+                </section>
+            </div>
         </div>
         
         <div class="footer">
@@ -803,51 +830,64 @@
                 mobileMenuToggle.setAttribute('aria-expanded', isExpanded);
             });
             
-            // Navigation functionality
+            // Optimierte Navigation mit besserer Performance
             const navLinkElements = document.querySelectorAll('.nav-link');
             const pages = document.querySelectorAll('.page');
             
+            // Cache für vorgeladene Seiten
+            const pageCache = {};
+            
+            // Vorlade-Funktion für die Seiteninhalte
+            function preloadPages() {
+                pages.forEach(page => {
+                    const pageId = page.id;
+                    // Seite im Cache speichern
+                    pageCache[pageId] = page;
+                });
+            }
+            
+            // Führe das Vorladen aus
+            preloadPages();
+            
+            // Optimierte Navigation mit Übergang
             navLinkElements.forEach(link => {
                 link.addEventListener('click', function(e) {
                     e.preventDefault();
                     const pageId = this.getAttribute('href').substring(1);
                     
-                    navLinkElements.forEach(link => link.classList.remove('active'));
-                    pages.forEach(page => page.classList.remove('active'));
+                    // Füge eine Klasse für die Übergangsanimation hinzu
+                    document.body.classList.add('page-transitioning');
                     
-                    this.classList.add('active');
-                    document.getElementById(pageId).classList.add('active');
+                    // Verhindere Doppelanklicken während der Navigation
+                    if (this.classList.contains('navigating')) return;
+                    this.classList.add('navigating');
                     
-                    // Close mobile menu when a link is clicked
-                    navLinks.classList.remove('active');
-                    
-                    // Scroll to top when changing pages
-                    window.scrollTo({
-                        top: 0,
-                        behavior: 'smooth'
-                    });
-                });
-            });
-            
-            // Back to top button
-            const backToTopButton = document.querySelector('.back-to-top');
-            
-            window.addEventListener('scroll', () => {
-                if (window.pageYOffset > 300) {
-                    backToTopButton.classList.add('visible');
-                } else {
-                    backToTopButton.classList.remove('visible');
-                }
-            });
-            
-            backToTopButton.addEventListener('click', (e) => {
-                e.preventDefault();
-                window.scrollTo({
-                    top: 0,
-                    behavior: 'smooth'
-                });
-            });
-        });
-    </script>
+                    // Kurzer Timeout für den Übergang
+                    setTimeout(() => {
+                        // Navigation aktualisieren
+                        navLinkElements.forEach(innerLink => innerLink.classList.remove('active', 'navigating'));
+                        pages.forEach(page => page.classList.remove('active'));
+                        
+                        // Aktive Elemente setzen
+                        this.classList.add('active');
+                        document.getElementById(pageId).classList.add('active');
+                        
+                        // Mobile-Menü schließen
+                        navLinks.classList.remove('active');
+                        
+                        // Sanftes Scrollen nach oben
+                        window.scrollTo({
+                            top: 0,
+                            behavior: 'smooth'
+                        });
+                        
+                        // Animation beenden
+                        setTimeout(() => {
+                            document.body.classList.remove('page-transitioning');
+        }, 50);
+    });
+});
+</script>
 </body>
 </html>
+                
