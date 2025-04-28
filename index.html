@@ -570,16 +570,32 @@
             
             .nav-links {
                 width: 100%;
-                max-height: 0;
-                overflow: hidden;
-                transition: max-height 0.3s ease; /* Verkürzte Transition */
+                /* Changed from max-height: 0 to display: none for immediate toggle */
+                display: none;
                 flex-direction: column;
                 align-items: center;
                 gap: 1rem;
+                margin-top: 1rem;
+                background-color: var(--card-bg);
+                padding: 1rem;
+                border-radius: 8px;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             }
             
             .nav-links.active {
-                max-height: 200px;
+                /* Changed from max-height to display for immediate toggle */
+                display: flex;
+            }
+            
+            .nav-link {
+                width: 100%;
+                text-align: center;
+                padding: 0.8rem 0;
+                border-bottom: 1px solid var(--border-color);
+            }
+            
+            .nav-link:last-child {
+                border-bottom: none;
             }
             
             .contact-item {
@@ -820,7 +836,7 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Mobile menu toggle
+            // Mobile menu toggle with immediate display (no animation)
             const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
             const navLinks = document.querySelector('.nav-links');
             
@@ -828,6 +844,14 @@
                 navLinks.classList.toggle('active');
                 const isExpanded = navLinks.classList.contains('active');
                 mobileMenuToggle.setAttribute('aria-expanded', isExpanded);
+                // Change icon based on menu state
+                if (isExpanded) {
+                    this.innerHTML = '<i class="fas fa-times"></i>';
+                    this.setAttribute('aria-label', 'Menü schließen');
+                } else {
+                    this.innerHTML = '<i class="fas fa-bars"></i>';
+                    this.setAttribute('aria-label', 'Menü öffnen');
+                }
             });
             
             // Optimierte Navigation mit besserer Performance
@@ -849,45 +873,68 @@
             // Führe das Vorladen aus
             preloadPages();
             
-            // Optimierte Navigation mit Übergang
-            navLinkElements.forEach(link => {
-                link.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const pageId = this.getAttribute('href').substring(1);
-                    
-                    // Füge eine Klasse für die Übergangsanimation hinzu
-                    document.body.classList.add('page-transitioning');
-                    
-                    // Verhindere Doppelanklicken während der Navigation
-                    if (this.classList.contains('navigating')) return;
-                    this.classList.add('navigating');
-                    
-                    // Kurzer Timeout für den Übergang
-                    setTimeout(() => {
-                        // Navigation aktualisieren
-                        navLinkElements.forEach(innerLink => innerLink.classList.remove('active', 'navigating'));
-                        pages.forEach(page => page.classList.remove('active'));
-                        
-                        // Aktive Elemente setzen
-                        this.classList.add('active');
-                        document.getElementById(pageId).classList.add('active');
-                        
-                        // Mobile-Menü schließen
-                        navLinks.classList.remove('active');
-                        
-                        // Sanftes Scrollen nach oben
-                        window.scrollTo({
-                            top: 0,
-                            behavior: 'smooth'
-                        });
-                        
-                        // Animation beenden
-                        setTimeout(() => {
-                            document.body.classList.remove('page-transitioning');
-                        }, 50);
-                    });
-                });
-        </script>
-    </body>
-</html>
+            // Back to top button
+            const backToTopButton = document.querySelector('.back-to-top');
+            
+            // Show back to top button when scrolling down
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 300) {
+                    backToTopButton.classList.remove('visible');
+        }
+    });
+    
+    // Scroll to top when clicking the button
+    backToTopButton.addEventListener('click', function(e) {
+        e.preventDefault();
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    });
+    
+    // Optimierte Navigation mit Übergang
+    navLinkElements.forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            const pageId = this.getAttribute('href').substring(1);
+            
+            // Füge eine Klasse für die Übergangsanimation hinzu
+            document.body.classList.add('page-transitioning');
+            
+            // Verhindere Doppelanklicken während der Navigation
+            if (this.classList.contains('navigating')) return;
+            this.classList.add('navigating');
+            
+            // Kurzer Timeout für den Übergang
+            setTimeout(() => {
+                // Navigation aktualisieren
+                navLinkElements.forEach(innerLink => innerLink.classList.remove('active', 'navigating'));
+                pages.forEach(page => page.classList.remove('active'));
                 
+                // Aktive Elemente setzen
+                this.classList.add('active');
+                document.getElementById(pageId).classList.add('active');
+                
+                // Mobile-Menü schließen
+                navLinks.classList.remove('active');
+                mobileMenuToggle.innerHTML = '<i class="fas fa-bars"></i>';
+                mobileMenuToggle.setAttribute('aria-expanded', 'false');
+                mobileMenuToggle.setAttribute('aria-label', 'Menü öffnen');
+                
+                // Sanftes Scrollen nach oben
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+                
+                // Animation beenden
+                setTimeout(() => {
+                    document.body.classList.remove('page-transitioning');
+                }, 50);
+            }, 10);
+        });
+    });
+});
+</script>
+</body>
+</html>
