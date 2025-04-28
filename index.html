@@ -520,7 +520,7 @@
         
         /* Optimierte Page transitions */
         .page {
-            position: absolute;
+            display: none;
             width: 100%;
             opacity: 0;
             pointer-events: none;
@@ -533,7 +533,7 @@
         }
         
         .page.active {
-            position: relative;
+            display: block;
             opacity: 1;
             pointer-events: auto;
         }
