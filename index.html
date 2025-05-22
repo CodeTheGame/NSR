@@ -4,646 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DJ Portfolio</title>
+    <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        /* Base styles and resets */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Helvetica Neue', Arial, sans-serif;
-        }
-        
-        :root {
-            --accent-color: #FFBF00;
-            --dark-bg: #121212;
-            --card-bg: #1D1D1D;
-            --border-color: #333;
-            scroll-behavior: smooth;
-        }
-        
-        body {
-            background-color: var(--dark-bg);
-            color: #fff;
-            line-height: 1.6;
-        }
-        
-        img {
-            max-width: 100%;
-            height: auto;
-        }
-        
-        /* Layout and container */
-        .container {
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-            padding: 1rem;
-            max-width: 1200px;
-            margin: 0 auto;
-            width: 95%;
-        }
-        
-        /* Navigation */
-        nav {
-            width: 100%;
-            padding: 1rem 0;
-            margin-bottom: 2rem;
-            border-bottom: 1px solid var(--border-color);
-            position: sticky;
-            top: 0;
-            background-color: rgba(18, 18, 18, 0.95);
-            z-index: 100;
-            backdrop-filter: blur(5px);
-            -webkit-backdrop-filter: blur(5px);
-        }
-        
-        .nav-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-        
-        .nav-logo {
-            font-size: 1.5rem;
-            font-weight: bold;
-            letter-spacing: 2px;
-            color: #fff;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .nav-logo span {
-            color: var(--accent-color);
-        }
-        
-        .logo-img {
-            height: 40px;
-            width: auto;
-        }
-        
-        .nav-links {
-            display: flex;
-            gap: 1.5rem;
-            flex-wrap: wrap;
-            margin-top: 0.5rem;
-        }
-        
-        .nav-link {
-            color: #fff;
-            text-decoration: none;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            font-size: 0.9rem;
-            transition: color 0.3s ease;
-            padding: 0.5rem 0;
-            position: relative;
-        }
-        
-        .nav-link:hover, .nav-link.active {
-            color: var(--accent-color);
-        }
-        
-        .nav-link.active::after {
-            content: '';
-            position: absolute;
-            bottom: -2px;
-            left: 0;
-            width: 100%;
-            height: 2px;
-            background-color: var(--accent-color);
-        }
-        
-        /* Mobile menu toggle - hidden by default */
-        .mobile-menu-toggle {
-            display: none;
-            color: white;
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            cursor: pointer;
-        }
-        
-        /* Common section styles */
-        section {
-            width: 100%;
-            margin-bottom: 4rem;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        
-        /* Hero section */
-        .hero {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            margin-bottom: 2rem;
-        }
-        
-        .logo {
-            margin-bottom: 1.5rem;
-        }
-        
-        .logo h1 {
-            font-size: clamp(2.5rem, 5vw, 4rem);
-            letter-spacing: clamp(4px, 1vw, 8px);
-            font-weight: 700;
-            text-transform: uppercase;
-        }
-        
-        .accent {
-            color: var(--accent-color);
-        }
-        
-        .tagline {
-            font-size: clamp(1rem, 2vw, 1.2rem);
-            color: #aaa;
-            letter-spacing: 2px;
-        }
-        
-        .profile-image {
-            width: clamp(180px, 30vw, 250px);
-            height: clamp(180px, 30vw, 250px);
-            background-color: #333;
-            border-radius: 50%;
-            margin: 2rem 0;
-            border: 3px solid var(--accent-color);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: #aaa;
-            overflow: hidden;
-            box-shadow: 0 8px 20px rgba(75, 139, 245, 0.3);
-        }
-
-        .profile-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        
-        /* Social links */
-        .social-links {
-            display: flex;
-            flex-direction: row;
-            gap: 1rem;
-            margin: 2rem 0;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-        
-        .social-button {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            background-color: #222;
-            color: #fff;
-            text-decoration: none;
-            padding: 12px 20px;
-            border-radius: 5px;
-            transition: all 0.3s ease;
-            border: 1px solid #333;
-            width: clamp(120px, 40vw, 150px);
-            word-break: keep-all;
-        }
-        
-        .social-button:hover {
-            background-color: var(--accent-color);
-            transform: translateY(-3px);
-            box-shadow: 0 4px 12px rgba(75, 139, 245, 0.3);
-        }
-        
-        .social-button i {
-            font-size: 1.2rem;
-        }
-        
-        /* Section titles */
-        .section-title {
-            font-size: clamp(1.5rem, 3vw, 2rem);
-            margin-bottom: 2rem;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            position: relative;
-            padding-bottom: 0.5rem;
-            text-align: center;
-        }
-        
-        .section-title::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80px;
-            height: 3px;
-            background-color: var(--accent-color);
-        }
-        
-        /* DJ info section */
-        .dj-info {
-            max-width: 800px;
-            margin: 0 auto;
-            text-align: center;
-            padding: 2rem;
-            background-color: var(--card-bg);
-            border-radius: 8px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-            width: 100%;
-        }
-        
-        .dj-info p {
-            margin-bottom: 1rem;
-            font-size: clamp(1rem, 2vw, 1.1rem);
-            line-height: 1.8;
-            color: #ddd;
-        }
-        
-        .dj-info p:last-child {
-            margin-bottom: 0;
-        }
-        
-        /* Booking Page Styles */
-        .booking-container {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 3rem;
-            width: 100%;
-            align-items: start;
-        }
-        
-        .booking-info {
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-        }
-        
-        .booking-description {
-            font-size: clamp(1rem, 2vw, 1.1rem);
-            line-height: 1.7;
-            margin-bottom: 1.5rem;
-        }
-        
-        .contact-info {
-            background-color: #222;
-            padding: 2rem;
-            border-radius: 8px;
-            border-left: 4px solid var(--accent-color);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-        }
-        
-        .contact-item {
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: flex-start;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-        
-        .contact-item i {
-            color: var(--accent-color);
-            font-size: 1.2rem;
-            width: 20px;
-            text-align: center;
-            flex-shrink: 0;
-        }
-        
-        .contact-label {
-            font-weight: bold;
-            margin-right: 10px;
-        }
-        
-        .contact-value {
-            color: #ddd;
-            word-break: break-word;
-        }
-        
-        .contact-value a {
-            color: var(--accent-color);
-            text-decoration: none;
-        }
-        
-        .contact-value a:hover {
-            text-decoration: underline;
-        }
-        
-        .image-gallery {
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            gap: 2rem;
-        }
-        
-        .performance-image {
-            width: 100%;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
-            position: relative;
-            aspect-ratio: 16/9;
-        }
-        
-        .performance-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-            transition: transform 0.5s ease;
-        }
-        
-        .performance-image:hover img {
-            transform: scale(1.03);
-        }
-        
-        .image-caption {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 100%);
-            padding: 1.5rem 1rem 0.8rem;
-            font-size: 0.9rem;
-            color: #fff;
-        }
-        
-        /* Rent Equipment Page Styles */
-        .rent-container {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 3rem;
-            width: 100%;
-            align-items: start;
-        }
-        
-        .rent-info {
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-        }
-        
-        .rent-description {
-            font-size: clamp(1rem, 2vw, 1.1rem);
-            line-height: 1.7;
-            margin-bottom: 1.5rem;
-        }
-        
-        .equipment-category {
-            background-color: #222;
-            padding: 2rem;
-            border-radius: 8px;
-            margin-bottom: 2rem;
-            border-left: 4px solid var(--accent-color);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-        }
-        
-        .equipment-category h3 {
-            color: var(--accent-color);
-            margin-bottom: 1rem;
-            font-size: 1.3rem;
-        }
-        
-        .equipment-list {
-            list-style: none;
-        }
-        
-        .equipment-item {
-            margin-bottom: 1rem;
-            padding-left: 25px;
-            position: relative;
-        }
-        
-        .equipment-item:before {
-            content: "•";
-            color: var(--accent-color);
-            position: absolute;
-            left: 0;
-            font-size: 1.5rem;
-            line-height: 1;
-        }
-        
-        .setup-gallery {
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            gap: 2rem;
-        }
-        
-        .setup-image {
-            width: 100%;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
-            position: relative;
-            aspect-ratio: 16/9;
-        }
-        
-        .setup-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-            transition: transform 0.5s ease;
-        }
-        
-        .setup-image:hover img {
-            transform: scale(1.03);
-        }
-        
-        /* Back to top button */
-        .back-to-top {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            width: 50px;
-            height: 50px;
-            background-color: var(--accent-color);
-            color: #fff;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
-            text-decoration: none;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-            opacity: 0;
-            transition: all 0.3s ease;
-            z-index: 99;
-        }
-        
-        .back-to-top.visible {
-            opacity: 1;
-        }
-        
-        .back-to-top:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
-        }
-        
-        /* Footer */
-        .footer {
-            margin-top: auto;
-            padding-top: 2rem;
-            font-size: 0.9rem;
-            color: #aaa;
-            text-align: center;
-            border-top: 1px solid var(--border-color);
-        }
-        
-        .footer-links {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            margin-bottom: 1.5rem;
-            flex-wrap: wrap;
-        }
-        
-        .footer-link {
-            color: #aaa;
-            text-decoration: none;
-            transition: color 0.3s ease;
-            padding: 0.5rem;
-        }
-        
-        .footer-link:hover {
-            color: var(--accent-color);
-        }
-        
-        .copyright {
-            margin-top: 1rem;
-            padding: 0 1rem;
-        }
-        
-        /* Optimierte Page transitions */
-        .page {
-            display: none;
-            width: 100%;
-            opacity: 0;
-            pointer-events: none;
-            transform: translateZ(0);  /* Hardware-Beschleunigung */
-            will-change: opacity;     /* Informiert Browser über Veränderung */
-            backface-visibility: hidden;
-            transition: opacity 0.3s ease;
-            left: 0;
-            right: 0;
-        }
-        
-        .page.active {
-            display: block;
-            opacity: 1;
-            pointer-events: auto;
-        }
-        
-        /* Preload optimierung */
-        .page-container {
-            position: relative;
-            min-height: 100vh;
-        }
-        
-        /* Media queries for responsive design */
-        @media (min-width: 768px) {
-            .container {
-                padding: 2rem;
-            }
-            
-            .booking-container, .rent-container {
-                grid-template-columns: 1fr 1fr;
-            }
-            
-            .nav-container {
-                flex-wrap: nowrap;
-            }
-            
-            .nav-links {
-                margin-top: 0;
-            }
-        }
-        
-        @media (max-width: 767px) {
-            .mobile-menu-toggle {
-                display: block;
-            }
-            
-            .nav-links {
-                width: 100%;
-                /* Changed from max-height: 0 to display: none for immediate toggle */
-                display: none;
-                flex-direction: column;
-                align-items: center;
-                gap: 1rem;
-                margin-top: 1rem;
-                background-color: var(--card-bg);
-                padding: 1rem;
-                border-radius: 8px;
-                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            }
-            
-            .nav-links.active {
-                /* Changed from max-height to display for immediate toggle */
-                display: flex;
-            }
-            
-            .nav-link {
-                width: 100%;
-                text-align: center;
-                padding: 0.8rem 0;
-                border-bottom: 1px solid var(--border-color);
-            }
-            
-            .nav-link:last-child {
-                border-bottom: none;
-            }
-            
-            .contact-item {
-                flex-direction: column;
-            }
-            
-            .profile-image {
-                margin: 1.5rem 0;
-            }
-            
-            .social-links {
-                gap: 0.5rem;
-            }
-            
-            .social-button {
-                width: calc(50% - 0.5rem);
-            }
-            
-            .back-to-top {
-                bottom: 15px;
-                right: 15px;
-                width: 40px;
-                height: 40px;
-            }
-            
-            .footer-links {
-                gap: 1rem;
-            }
-            
-            .dj-info, .contact-info, .equipment-category {
-                padding: 1.5rem;
-            }
-            
-            /* Reduzierte Animationen auf Mobilgeräten */
-            .page {
-                transition: opacity 0.2s ease;
-            }
-            
-            .performance-image img, .setup-image img {
-                transition: transform 0.3s ease;
-            }
-        }
-        
-        /* Minimale Animation während des Seitenwechsels */
-        body.page-transitioning .container {
-            opacity: 0.8;
-        }
-    </style>
 </head>
 <body>
     <div class="container">
@@ -729,26 +91,61 @@
                             <p class="booking-description">
                                 Ob entspannte Lounge-Atmosphäre oder pulsierende Clubnächte, ich passe meine Sets genau auf die Stimmung deines Events an.
                             </p>
-                            <div class="contact-info">
-                                <div class="contact-item">
-                                    <i class="fas fa-envelope"></i>
-                                    <span class="contact-label">Email:</span>
-                                    <span class="contact-value"><a href="mailto:booking@djname.com">booking@djname.com</a></span>
-                                </div>
-                                <div class="contact-item">
-                                    <i class="fas fa-phone"></i>
-                                    <span class="contact-label">Telefon:</span>
-                                    <span class="contact-value">+49 123 456789</span>
-                                </div>
-                                <div class="contact-item">
-                                    <i class="fas fa-calendar-alt"></i>
-                                    <span class="contact-label">Antwortzeit:</span>
-                                    <span class="contact-value">Innerhalb von 48 Stunden</span>
-                                </div>
-                                <div class="contact-item">
-                                    <i class="fas fa-globe"></i>
-                                    <span class="contact-label">Booking Agentur:</span>
-                                    <span class="contact-value">Global Beats Agency</span>
+                            <div class="contact-form-container">
+                                <div class="contact-form">
+                                    <h3 style="color: var(--accent-color); margin-bottom: 1.5rem; text-align: center;">Booking Anfrage</h3>
+                                    <form id="bookingForm" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+                                        <div class="form-row">
+                                            <div class="form-group">
+                                                <label for="booking-name">Name *</label>
+                                                <input type="text" id="booking-name" name="name" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="booking-email">E-Mail *</label>
+                                                <input type="email" id="booking-email" name="email" required>
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="form-group">
+                                                <label for="booking-phone">Telefon</label>
+                                                <input type="tel" id="booking-phone" name="phone">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="booking-date">Veranstaltungsdatum</label>
+                                                <input type="date" id="booking-date" name="event_date">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="booking-event-type">Art der Veranstaltung</label>
+                                            <select id="booking-event-type" name="event_type">
+                                                <option value="">Bitte wählen...</option>
+                                                <option value="hochzeit">Hochzeit</option>
+                                                <option value="geburtstag">Geburtstag</option>
+                                                <option value="firmenevent">Firmenevent</option>
+                                                <option value="abiball">Abiball</option>
+                                                <option value="club">Club Event</option>
+                                                <option value="sonstiges">Sonstiges</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="booking-location">Veranstaltungsort</label>
+                                            <input type="text" id="booking-location" name="location" placeholder="Stadt oder genauer Ort">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="booking-guests">Anzahl Gäste (ca.)</label>
+                                            <input type="number" id="booking-guests" name="guest_count" min="1" placeholder="z.B. 50">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="booking-message">Nachricht / Besondere Wünsche</label>
+                                            <textarea id="booking-message" name="message" rows="4" placeholder="Beschreiben Sie Ihre Veranstaltung und besondere Wünsche..."></textarea>
+                                        </div>
+                                        <input type="hidden" name="_subject" value="Neue Booking Anfrage von Website">
+                                        <input type="hidden" name="form_type" value="booking">
+                                        <button type="submit" class="submit-btn">
+                                            <i class="fas fa-paper-plane"></i>
+                                            Anfrage senden
+                                        </button>
+                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -793,21 +190,84 @@
                                 </ul>
                             </div>
                             
-                            <div class="contact-info">
-                                <div class="contact-item">
-                                    <i class="fas fa-envelope"></i>
-                                    <span class="contact-label">Email:</span>
-                                    <span class="contact-value"><a href="mailto:equipment@djname.com">equipment@djname.com</a></span>
-                                </div>
-                                <div class="contact-item">
-                                    <i class="fas fa-phone"></i>
-                                    <span class="contact-label">Telefon:</span>
-                                    <span class="contact-value">+49 123 456789</span>
-                                </div>
-                                <div class="contact-item">
-                                    <i class="fas fa-calendar-alt"></i>
-                                    <span class="contact-label">Antwortzeit:</span>
-                                    <span class="contact-value">Innerhalb von 24 Stunden</span>
+                            <div class="contact-form-container">
+                                <div class="contact-form">
+                                    <h3 style="color: var(--accent-color); margin-bottom: 1.5rem; text-align: center;">Equipment Anfrage</h3>
+                                    <form id="rentForm" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+                                        <div class="form-row">
+                                            <div class="form-group">
+                                                <label for="rent-name">Name *</label>
+                                                <input type="text" id="rent-name" name="name" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="rent-email">E-Mail *</label>
+                                                <input type="email" id="rent-email" name="email" required>
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="form-group">
+                                                <label for="rent-phone">Telefon</label>
+                                                <input type="tel" id="rent-phone" name="phone">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="rent-date">Veranstaltungsdatum</label>
+                                                <input type="date" id="rent-date" name="event_date">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="rent-location">Veranstaltungsort</label>
+                                            <input type="text" id="rent-location" name="location" placeholder="Stadt oder genauer Ort">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="rent-equipment">Benötigtes Equipment</label>
+                                            <div class="checkbox-group">
+                                                <label class="checkbox-label">
+                                                    <input type="checkbox" name="equipment[]" value="pa-system">
+                                                    <span class="checkmark"></span>
+                                                    PA-System / Lautsprecher
+                                                </label>
+                                                <label class="checkbox-label">
+                                                    <input type="checkbox" name="equipment[]" value="subwoofer">
+                                                    <span class="checkmark"></span>
+                                                    Subwoofer
+                                                </label>
+                                                <label class="checkbox-label">
+                                                    <input type="checkbox" name="equipment[]" value="led-par">
+                                                    <span class="checkmark"></span>
+                                                    LED Par Scheinwerfer
+                                                </label>
+                                                <label class="checkbox-label">
+                                                    <input type="checkbox" name="equipment[]" value="moving-heads">
+                                                    <span class="checkmark"></span>
+                                                    Moving Heads
+                                                </label>
+                                                <label class="checkbox-label">
+                                                    <input type="checkbox" name="equipment[]" value="nebelmaschine">
+                                                    <span class="checkmark"></span>
+                                                    Nebelmaschine
+                                                </label>
+                                                <label class="checkbox-label">
+                                                    <input type="checkbox" name="equipment[]" value="full-service">
+                                                    <span class="checkmark"></span>
+                                                    Full-Service (Aufbau & Betreuung)
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="rent-guests">Anzahl Gäste (ca.)</label>
+                                            <input type="number" id="rent-guests" name="guest_count" min="1" placeholder="z.B. 50">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="rent-message">Nachricht / Besondere Wünsche</label>
+                                            <textarea id="rent-message" name="message" rows="4" placeholder="Beschreiben Sie Ihre Anforderungen..."></textarea>
+                                        </div>
+                                        <input type="hidden" name="_subject" value="Neue Equipment Anfrage von Website">
+                                        <input type="hidden" name="form_type" value="equipment">
+                                        <button type="submit" class="submit-btn">
+                                            <i class="fas fa-paper-plane"></i>
+                                            Anfrage senden
+                                        </button>
+                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -893,11 +353,173 @@
                 </div>
             </section>
         </div>
+        <div id="datenschutz" class="page">
+            <section>
+                <h2 class="section-title">Datenschutzerklärung</h2>
+                <div class="legal-content">
+                    <h3>1. Datenschutz auf einen Blick</h3>
+                    <h4>Allgemeine Hinweise</h4>
+                    <p>Die folgenden Hinweise geben einen einfachen Überblick darüber, was mit Ihren personenbezogenen Daten passiert, wenn Sie diese Website besuchen. Personenbezogene Daten sind alle Daten, mit denen Sie persönlich identifiziert werden können.</p>
+                    
+                    <h4>Datenerfassung auf dieser Website</h4>
+                    <p><strong>Wer ist verantwortlich für die Datenerfassung auf dieser Website?</strong></p>
+                    <p>Die Datenverarbeitung auf dieser Website erfolgt durch den Websitebetreiber. Dessen Kontaktdaten können Sie dem Impressum dieser Website entnehmen.</p>
+                    
+                    <p><strong>Wie erfassen wir Ihre Daten?</strong></p>
+                    <p>Ihre Daten werden zum einen dadurch erhoben, dass Sie uns diese mitteilen. Hierbei kann es sich z.B. um Daten handeln, die Sie in ein Kontaktformular eingeben.</p>
+                    
+                    <h3>2. Hosting</h3>
+                    <h4>Externes Hosting</h4>
+                    <p>Diese Website wird bei einem externen Dienstleister gehostet (Hoster). Die personenbezogenen Daten, die auf dieser Website erfasst werden, werden auf den Servern des Hosters gespeichert.</p>
+                    
+                    <h3>3. Allgemeine Hinweise und Pflichtinformationen</h3>
+                    <h4>Datenschutz</h4>
+                    <p>Die Betreiber dieser Seiten nehmen den Schutz Ihrer persönlichen Daten sehr ernst. Wir behandeln Ihre personenbezogenen Daten vertraulich und entsprechend der gesetzlichen Datenschutzvorschriften sowie dieser Datenschutzerklärung.</p>
+                    
+                    <h4>Hinweis zur verantwortlichen Stelle</h4>
+                    <p>Die verantwortliche Stelle für die Datenverarbeitung auf dieser Website ist:</p>
+                    <p>
+                        NSR Music<br>
+                        [Ihre Adresse]<br>
+                        [PLZ Ort]<br>
+                        Telefon: [Ihre Telefonnummer]<br>
+                        E-Mail: [Ihre E-Mail]
+                    </p>
+                    
+                    <h3>4. Datenerfassung auf dieser Website</h3>
+                    <h4>Kontaktformular</h4>
+                    <p>Wenn Sie uns per Kontaktformular Anfragen zukommen lassen, werden Ihre Angaben aus dem Anfrageformular inklusive der von Ihnen dort angegebenen Kontaktdaten zwecks Bearbeitung der Anfrage und für den Fall von Anschlussfragen bei uns gespeichert. Diese Daten geben wir nicht ohne Ihre Einwilligung weiter.</p>
+                    
+                    <h3>5. Ihre Rechte</h3>
+                    <p>Sie haben jederzeit das Recht unentgeltlich Auskunft über Herkunft, Empfänger und Zweck Ihrer gespeicherten personenbezogenen Daten zu erhalten. Sie haben außerdem ein Recht, die Berichtigung, Sperrung oder Löschung dieser Daten zu verlangen.</p>
+                </div>
+            </section>
+        </div>
+        
+        <div id="impressum" class="page">
+            <section>
+                <h2 class="section-title">Impressum</h2>
+                <div class="legal-content">
+                    <h3>Angaben gemäß § 5 TMG</h3>
+                    <p>
+                        NSR Music<br>
+                        [Ihr vollständiger Name]<br>
+                        [Straße und Hausnummer]<br>
+                        [PLZ und Ort]
+                    </p>
+                    
+                    <h3>Kontakt</h3>
+                    <p>
+                        Telefon: [Ihre Telefonnummer]<br>
+                        E-Mail: [Ihre E-Mail-Adresse]
+                    </p>
+                    
+                    <h3>Berufsbezeichnung und berufsrechtliche Regelungen</h3>
+                    <p>
+                        Berufsbezeichnung: DJ / Musikproduzent<br>
+                        Verliehen in: Deutschland
+                    </p>
+                    
+                    <h3>EU-Streitschlichtung</h3>
+                    <p>Die Europäische Kommission stellt eine Plattform zur Online-Streitbeilegung (OS) bereit: 
+                    <a href="https://ec.europa.eu/consumers/odr/" target="_blank" rel="noopener noreferrer">https://ec.europa.eu/consumers/odr/</a><br>
+                    Unsere E-Mail-Adresse finden Sie oben im Impressum.</p>
+                    
+                    <h3>Verbraucher­streit­beilegung/Universal­schlichtungs­stelle</h3>
+                    <p>Wir sind nicht bereit oder verpflichtet, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.</p>
+                    
+                    <h3>Haftung für Inhalte</h3>
+                    <p>Als Diensteanbieter sind wir gemäß § 7 Abs.1 TMG für eigene Inhalte auf diesen Seiten nach den allgemeinen Gesetzen verantwortlich. Nach §§ 8 bis 10 TMG sind wir als Diensteanbieter jedoch nicht unter der Verpflichtung, übermittelte oder gespeicherte fremde Informationen zu überwachen oder nach Umständen zu forschen, die auf eine rechtswidrige Tätigkeit hinweisen.</p>
+                    
+                    <h3>Haftung für Links</h3>
+                    <p>Unser Angebot enthält Links zu externen Websites Dritter, auf deren Inhalte wir keinen Einfluss haben. Deshalb können wir für diese fremden Inhalte auch keine Gewähr übernehmen. Für die Inhalte der verlinkten Seiten ist stets der jeweilige Anbieter oder Betreiber der Seiten verantwortlich.</p>
+                    
+                    <h3>Urheberrecht</h3>
+                    <p>Die durch die Seitenbetreiber erstellten Inhalte und Werke auf diesen Seiten unterliegen dem deutschen Urheberrecht. Die Vervielfältigung, Bearbeitung, Verbreitung und jede Art der Verwertung außerhalb der Grenzen des Urheberrechtes bedürfen der schriftlichen Zustimmung des jeweiligen Autors bzw. Erstellers.</p>
+                </div>
+            </section>
+        </div>
+        
+        <div id="kontakt" class="page">
+            <section>
+                <h2 class="section-title">Kontakt</h2>
+                <div class="booking-container">
+                    <div class="booking-info">
+                        <p class="booking-description">
+                            Haben Sie Fragen zu meinen Services oder möchten Sie eine unverbindliche Anfrage stellen? 
+                            Ich freue mich auf Ihre Nachricht und antworte schnellstmöglich.
+                        </p>
+                        <p class="booking-description">
+                            Für spezielle Booking-Anfragen nutzen Sie gerne das <a href="#booking" style="color: var(--accent-color);">Booking-Formular</a>, 
+                            für Equipment-Anfragen das <a href="#rent" style="color: var(--accent-color);">Equipment-Formular</a>.
+                        </p>
+                        
+                        <div class="contact-form-container">
+                            <div class="contact-form">
+                                <h3 style="color: var(--accent-color); margin-bottom: 1.5rem; text-align: center;">Allgemeine Anfrage</h3>
+                                <form id="contactForm" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label for="contact-name">Name *</label>
+                                            <input type="text" id="contact-name" name="name" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="contact-email">E-Mail *</label>
+                                            <input type="email" id="contact-email" name="email" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="contact-subject">Betreff</label>
+                                        <input type="text" id="contact-subject" name="subject" placeholder="Worum geht es?">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="contact-message">Nachricht *</label>
+                                        <textarea id="contact-message" name="message" rows="6" placeholder="Ihre Nachricht..." required></textarea>
+                                    </div>
+                                    <input type="hidden" name="_subject" value="Neue Kontakt-Anfrage von Website">
+                                    <input type="hidden" name="form_type" value="contact">
+                                    <button type="submit" class="submit-btn">
+                                        <i class="fas fa-paper-plane"></i>
+                                        Nachricht senden
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="image-gallery">
+                        <div class="contact-info" style="background-color: var(--card-bg); padding: 2rem; border-radius: 8px; border-left: 4px solid var(--accent-color);">
+                            <h3 style="color: var(--accent-color); margin-bottom: 1rem;">Direkter Kontakt</h3>
+                            <div class="contact-item">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span class="contact-label">Standort:</span>
+                                <span class="contact-value">Köln/Bonn Region</span>
+                            </div>
+                            <div class="contact-item">
+                                <i class="fas fa-clock"></i>
+                                <span class="contact-label">Antwortzeit:</span>
+                                <span class="contact-value">Innerhalb von 24 Stunden</span>
+                            </div>
+                            <div class="contact-item">
+                                <i class="fas fa-music"></i>
+                                <span class="contact-label">Genres:</span>
+                                <span class="contact-value">Deep House, Afro House, Open Format</span>
+                            </div>
+                            <div class="contact-item">
+                                <i class="fas fa-calendar-check"></i>
+                                <span class="contact-label">Verfügbarkeit:</span>
+                                <span class="contact-value">Ganzjährig für Events</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+        
         <div class="footer">
             <div class="footer-links">
-                <a href="#" class="footer-link">Datenschutz</a>
-                <a href="#" class="footer-link">Impressum</a>
-                <a href="#" class="footer-link">Kontakt</a>
+                <a href="#datenschutz" class="footer-link">Datenschutz</a>
+                <a href="#impressum" class="footer-link">Impressum</a>
+                <a href="#kontakt" class="footer-link">Kontakt</a>
             </div>
             <div class="copyright">
                 &copy; 2025 NSR • Alle Rechte vorbehalten
@@ -910,51 +532,54 @@
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Mobile menu toggle with immediate display (no animation)
-            const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
-            const navLinks = document.querySelector('.nav-links');
-            
-            mobileMenuToggle.addEventListener('click', function() {
-                navLinks.classList.toggle('active');
-                const isExpanded = navLinks.classList.contains('active');
-                mobileMenuToggle.setAttribute('aria-expanded', isExpanded);
-                // Change icon based on menu state
-                if (isExpanded) {
-                    this.innerHTML = '<i class="fas fa-times"></i>';
-                    this.setAttribute('aria-label', 'Menü schließen');
-                } else {
-                    this.innerHTML = '<i class="fas fa-bars"></i>';
-                    this.setAttribute('aria-label', 'Menü öffnen');
-                }
-            });
-            
-            // Optimierte Navigation mit besserer Performance
-            const navLinkElements = document.querySelectorAll('.nav-link');
-            const pages = document.querySelectorAll('.page');
-            
-            // Cache für vorgeladene Seiten
-            const pageCache = {};
-            
-            // Vorlade-Funktion für die Seiteninhalte
-            function preloadPages() {
-                pages.forEach(page => {
-                    const pageId = page.id;
-                    // Seite im Cache speichern
-                    pageCache[pageId] = page;
-                });
-            }
-            
-            // Führe das Vorladen aus
-            preloadPages();
-            
-            // Back to top button
-            const backToTopButton = document.querySelector('.back-to-top');
-            
-            // Show back to top button when scrolling down
-            window.addEventListener('scroll', function() {
-                if (window.scrollY > 300) {
-                    backToTopButton.classList.remove('visible');
+        
+    document.addEventListener('DOMContentLoaded', function() {
+    // Mobile menu toggle with immediate display (no animation)
+    const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
+    const navLinks = document.querySelector('.nav-links');
+    
+    mobileMenuToggle.addEventListener('click', function() {
+        navLinks.classList.toggle('active');
+        const isExpanded = navLinks.classList.contains('active');
+        mobileMenuToggle.setAttribute('aria-expanded', isExpanded);
+        // Change icon based on menu state
+        if (isExpanded) {
+            this.innerHTML = '<i class="fas fa-times"></i>';
+            this.setAttribute('aria-label', 'Menü schließen');
+        } else {
+            this.innerHTML = '<i class="fas fa-bars"></i>';
+            this.setAttribute('aria-label', 'Menü öffnen');
+        }
+    });
+    
+    // Optimierte Navigation mit besserer Performance
+    const navLinkElements = document.querySelectorAll('.nav-link, .footer-link');
+    const pages = document.querySelectorAll('.page');
+    
+    // Cache für vorgeladene Seiten
+    const pageCache = {};
+    
+    // Vorlade-Funktion für die Seiteninhalte
+    function preloadPages() {
+        pages.forEach(page => {
+            const pageId = page.id;
+            // Seite im Cache speichern
+            pageCache[pageId] = page;
+        });
+    }
+    
+    // Führe das Vorladen aus
+    preloadPages();
+    
+    // Back to top button
+    const backToTopButton = document.querySelector('.back-to-top');
+    
+    // Show back to top button when scrolling down
+    window.addEventListener('scroll', function() {
+        if (window.scrollY > 300) {
+            backToTopButton.classList.add('visible');
+        } else {
+            backToTopButton.classList.remove('visible');
         }
     });
     
@@ -968,29 +593,86 @@
     });
     
     // Optimierte Navigation mit Übergang
-    navLinkElements.forEach(link => {
-        link.addEventListener('click', function(e) {
-            e.preventDefault();
-            const pageId = this.getAttribute('href').substring(1);
+navLinkElements.forEach(link => {
+    link.addEventListener('click', function(e) {
+        e.preventDefault();
+        const href = this.getAttribute('href');
+        if (!href || href === '#') return;
+        
+        const pageId = href.substring(1);
+        
+        // Prüfe ob die Seite existiert
+        if (!document.getElementById(pageId)) return;
+        
+        // Füge eine Klasse für die Übergangsanimation hinzu
+        document.body.classList.add('page-transitioning');
+        
+        // Verhindere Doppelanklicken während der Navigation
+        if (this.classList.contains('navigating')) return;
+        this.classList.add('navigating');
+        
+        // Kurzer Timeout für den Übergang
+        setTimeout(() => {
+            // Navigation aktualisieren (nur nav-links, nicht footer-links)
+            document.querySelectorAll('.nav-link').forEach(innerLink => {
+                innerLink.classList.remove('active', 'navigating');
+            });
+            pages.forEach(page => page.classList.remove('active'));
             
-            // Füge eine Klasse für die Übergangsanimation hinzu
+            // Aktive Elemente setzen
+            if (this.classList.contains('nav-link')) {
+                this.classList.add('active');
+            }
+            document.getElementById(pageId).classList.add('active');
+            
+            // Mobile-Menü schließen
+            navLinks.classList.remove('active');
+            mobileMenuToggle.innerHTML = '<i class="fas fa-bars"></i>';
+            mobileMenuToggle.setAttribute('aria-expanded', 'false');
+            mobileMenuToggle.setAttribute('aria-label', 'Menü öffnen');
+            
+            // Sanftes Scrollen nach oben
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+            
+            // Animation beenden
+            setTimeout(() => {
+                document.body.classList.remove('page-transitioning');
+            }, 50);
+        }, 10);
+    });
+});
+
+// NEUE FUNKTION: Links innerhalb der Seiteninhalte behandeln
+document.addEventListener('click', function(e) {
+    // Prüfe ob das geklickte Element ein interner Link ist
+    if (e.target.tagName === 'A' && e.target.getAttribute('href') && e.target.getAttribute('href').startsWith('#')) {
+        const href = e.target.getAttribute('href');
+        const pageId = href.substring(1);
+        
+        // Prüfe ob die Seite existiert
+        if (document.getElementById(pageId)) {
+            e.preventDefault();
+            
+            // Gleiche Navigation wie bei nav-links
             document.body.classList.add('page-transitioning');
             
-            // Verhindere Doppelanklicken während der Navigation
-            if (this.classList.contains('navigating')) return;
-            this.classList.add('navigating');
-            
-            // Kurzer Timeout für den Übergang
             setTimeout(() => {
                 // Navigation aktualisieren
-                navLinkElements.forEach(innerLink => innerLink.classList.remove('active', 'navigating'));
+                document.querySelectorAll('.nav-link').forEach(navLink => {
+                    navLink.classList.remove('active');
+                    if (navLink.getAttribute('href') === href) {
+                        navLink.classList.add('active');
+                    }
+                });
                 pages.forEach(page => page.classList.remove('active'));
                 
-                // Aktive Elemente setzen
-                this.classList.add('active');
+                // Aktive Seite setzen
                 document.getElementById(pageId).classList.add('active');
                 
-                // Mobile-Menü schließen
+                // Mobile-Menü schließen falls offen
                 navLinks.classList.remove('active');
                 mobileMenuToggle.innerHTML = '<i class="fas fa-bars"></i>';
                 mobileMenuToggle.setAttribute('aria-expanded', 'false');
@@ -1007,7 +689,63 @@
                     document.body.classList.remove('page-transitioning');
                 }, 50);
             }, 10);
+        }
+    }
+});
+
+    // Formular-Handling
+    const forms = document.querySelectorAll('#bookingForm, #rentForm, #contactForm');
+    
+    forms.forEach(form => {
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const submitBtn = form.querySelector('.submit-btn');
+            const originalText = submitBtn.innerHTML;
+            
+            // Loading state
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Wird gesendet...';
+            
+            // Simulate form submission (replace with actual form handling)
+            setTimeout(() => {
+                // Remove existing messages
+                const existingMessage = form.querySelector('.form-message');
+                if (existingMessage) {
+                    existingMessage.remove();
+                }
+                
+                // Add success message
+                const successMessage = document.createElement('div');
+                successMessage.className = 'form-message success';
+                
+                if (form.id === 'contactForm') {
+                    successMessage.innerHTML = '<i class="fas fa-check-circle"></i> Vielen Dank für Ihre Nachricht! Ich melde mich schnellstmöglich bei Ihnen.';
+                } else {
+                    successMessage.innerHTML = '<i class="fas fa-check-circle"></i> Vielen Dank! Ihre Anfrage wurde erfolgreich gesendet. Wir melden uns innerhalb von 48 Stunden bei Ihnen.';
+                }
+                
+                form.insertBefore(successMessage, form.firstChild);
+                
+                // Reset form
+                form.reset();
+                
+                // Reset button
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = originalText;
+                
+                // Scroll to success message
+                successMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                
+            }, 2000);
         });
+    });
+    
+    // Date input minimum value (today)
+    const dateInputs = document.querySelectorAll('input[type="date"]');
+    const today = new Date().toISOString().split('T')[0];
+    dateInputs.forEach(input => {
+        input.min = today;
     });
 });
 </script>
