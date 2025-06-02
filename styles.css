@@ -876,3 +876,49 @@
     .contact-value {
         color: #fff;
     }
+    .form-message {
+        padding: 1rem 1.5rem;
+        border-radius: 8px;
+        margin-bottom: 1.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-weight: 500;
+        animation: slideIn 0.3s ease-out;
+    }
+    
+    .form-message.success {
+        background-color: rgba(34, 197, 94, 0.1);
+        border: 1px solid rgba(34, 197, 94, 0.3);
+        color: #22c55e;
+    }
+    
+    .form-message.error {
+        background-color: rgba(239, 68, 68, 0.1);
+        border: 1px solid rgba(239, 68, 68, 0.3);
+        color: #ef4444;
+    }
+    
+    .form-message i {
+        font-size: 1.2rem;
+        flex-shrink: 0;
+    }
+    
+    @keyframes slideIn {
+        from {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    /* Responsive Anpassung */
+    @media (max-width: 768px) {
+        .form-message {
+            padding: 0.8rem 1rem;
+            font-size: 0.9rem;
+        }
+    }

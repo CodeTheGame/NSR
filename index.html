@@ -6,7 +6,6 @@
     <title>DJ Portfolio</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "4e00c8cc-9190-4b77-b35e-fc3d1197812f"}'></script>
 </head>
 <body>
     <div class="container">
@@ -91,7 +90,7 @@
                             <div class="contact-form-container">
                                 <div class="contact-form">
                                     <h3 style="color: var(--accent-color); margin-bottom: 1.5rem; text-align: center;">Booking Anfrage</h3>
-                                    <form id="bookingForm" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+                                    <form id="bookingForm" action="YOUR_TALLY_BOOKING_FORM_URL" method="POST">
                                         <div class="form-row">
                                             <div class="form-group">
                                                 <label for="booking-name">Name *</label>
@@ -136,8 +135,6 @@
                                             <label for="booking-message">Nachricht / Besondere Wünsche</label>
                                             <textarea id="booking-message" name="message" rows="4" placeholder="Beschreiben Sie Ihre Veranstaltung und besondere Wünsche..."></textarea>
                                         </div>
-                                        <input type="hidden" name="_subject" value="Neue Booking Anfrage von Website">
-                                        <input type="hidden" name="form_type" value="booking">
                                         <button type="submit" class="submit-btn">
                                             <i class="fas fa-paper-plane"></i>
                                             Anfrage senden
@@ -190,7 +187,7 @@
                             <div class="contact-form-container">
                                 <div class="contact-form">
                                     <h3 style="color: var(--accent-color); margin-bottom: 1.5rem; text-align: center;">Equipment Anfrage</h3>
-                                    <form id="rentForm" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+                                    <form id="rentForm" action="YOUR_TALLY_RENT_FORM_URL" method="POST">
                                         <div class="form-row">
                                             <div class="form-group">
                                                 <label for="rent-name">Name *</label>
@@ -219,32 +216,32 @@
                                             <label for="rent-equipment">Benötigtes Equipment</label>
                                             <div class="checkbox-group">
                                                 <label class="checkbox-label">
-                                                    <input type="checkbox" name="equipment[]" value="pa-system">
+                                                    <input type="checkbox" name="equipment" value="pa-system">
                                                     <span class="checkmark"></span>
                                                     PA-System / Lautsprecher
                                                 </label>
                                                 <label class="checkbox-label">
-                                                    <input type="checkbox" name="equipment[]" value="subwoofer">
+                                                    <input type="checkbox" name="equipment" value="subwoofer">
                                                     <span class="checkmark"></span>
                                                     Subwoofer
                                                 </label>
                                                 <label class="checkbox-label">
-                                                    <input type="checkbox" name="equipment[]" value="led-par">
+                                                    <input type="checkbox" name="equipment" value="led-par">
                                                     <span class="checkmark"></span>
                                                     LED Par Scheinwerfer
                                                 </label>
                                                 <label class="checkbox-label">
-                                                    <input type="checkbox" name="equipment[]" value="moving-heads">
+                                                    <input type="checkbox" name="equipment" value="moving-heads">
                                                     <span class="checkmark"></span>
                                                     Moving Heads
                                                 </label>
                                                 <label class="checkbox-label">
-                                                    <input type="checkbox" name="equipment[]" value="nebelmaschine">
+                                                    <input type="checkbox" name="equipment" value="nebelmaschine">
                                                     <span class="checkmark"></span>
                                                     Nebelmaschine
                                                 </label>
                                                 <label class="checkbox-label">
-                                                    <input type="checkbox" name="equipment[]" value="full-service">
+                                                    <input type="checkbox" name="equipment" value="full-service">
                                                     <span class="checkmark"></span>
                                                     Full-Service (Aufbau & Betreuung)
                                                 </label>
@@ -258,8 +255,6 @@
                                             <label for="rent-message">Nachricht / Besondere Wünsche</label>
                                             <textarea id="rent-message" name="message" rows="4" placeholder="Beschreiben Sie Ihre Anforderungen..."></textarea>
                                         </div>
-                                        <input type="hidden" name="_subject" value="Neue Equipment Anfrage von Website">
-                                        <input type="hidden" name="form_type" value="equipment">
                                         <button type="submit" class="submit-btn">
                                             <i class="fas fa-paper-plane"></i>
                                             Anfrage senden
@@ -475,7 +470,7 @@
                         <div class="contact-form-container">
                             <div class="contact-form">
                                 <h3 style="color: var(--accent-color); margin-bottom: 1.5rem; text-align: center;">Allgemeine Anfrage</h3>
-                                <form id="contactForm" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+                                <form id="contactForm" action="YOUR_TALLY_CONTACT_FORM_URL" method="POST">
                                     <div class="form-row">
                                         <div class="form-group">
                                             <label for="contact-name">Name *</label>
@@ -494,8 +489,6 @@
                                         <label for="contact-message">Nachricht *</label>
                                         <textarea id="contact-message" name="message" rows="6" placeholder="Ihre Nachricht..." required></textarea>
                                     </div>
-                                    <input type="hidden" name="_subject" value="Neue Kontakt-Anfrage von Website">
-                                    <input type="hidden" name="form_type" value="contact">
                                     <button type="submit" class="submit-btn">
                                         <i class="fas fa-paper-plane"></i>
                                         Nachricht senden
@@ -525,8 +518,16 @@
     </div>
 
     <script>
-        
-    document.addEventListener('DOMContentLoaded', function() {
+
+document.addEventListener('DOMContentLoaded', function() {
+    
+    // Tally Form URLs - ersetzen Sie diese mit Ihren echten URLs
+    const TALLY_FORMS = {
+        booking: 'https://tally.so/r/YOUR_BOOKING_FORM_ID',
+        rent: 'https://tally.so/r/YOUR_RENT_FORM_ID', 
+        contact: 'https://tally.so/r/YOUR_CONTACT_FORM_ID'
+    };
+
     // Mobile menu toggle with immediate display (no animation)
     const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
     const navLinks = document.querySelector('.nav-links');
@@ -586,86 +587,39 @@
     });
     
     // Optimierte Navigation mit Übergang
-navLinkElements.forEach(link => {
-    link.addEventListener('click', function(e) {
-        e.preventDefault();
-        const href = this.getAttribute('href');
-        if (!href || href === '#') return;
-        
-        const pageId = href.substring(1);
-        
-        // Prüfe ob die Seite existiert
-        if (!document.getElementById(pageId)) return;
-        
-        // Füge eine Klasse für die Übergangsanimation hinzu
-        document.body.classList.add('page-transitioning');
-        
-        // Verhindere Doppelanklicken während der Navigation
-        if (this.classList.contains('navigating')) return;
-        this.classList.add('navigating');
-        
-        // Kurzer Timeout für den Übergang
-        setTimeout(() => {
-            // Navigation aktualisieren (nur nav-links, nicht footer-links)
-            document.querySelectorAll('.nav-link').forEach(innerLink => {
-                innerLink.classList.remove('active', 'navigating');
-            });
-            pages.forEach(page => page.classList.remove('active'));
-            
-            // Aktive Elemente setzen
-            if (this.classList.contains('nav-link')) {
-                this.classList.add('active');
-            }
-            document.getElementById(pageId).classList.add('active');
-            
-            // Mobile-Menü schließen
-            navLinks.classList.remove('active');
-            mobileMenuToggle.innerHTML = '<i class="fas fa-bars"></i>';
-            mobileMenuToggle.setAttribute('aria-expanded', 'false');
-            mobileMenuToggle.setAttribute('aria-label', 'Menü öffnen');
-            
-            // Sanftes Scrollen nach oben
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-            
-            // Animation beenden
-            setTimeout(() => {
-                document.body.classList.remove('page-transitioning');
-            }, 50);
-        }, 10);
-    });
-});
-
-// NEUE FUNKTION: Links innerhalb der Seiteninhalte behandeln
-document.addEventListener('click', function(e) {
-    // Prüfe ob das geklickte Element ein interner Link ist
-    if (e.target.tagName === 'A' && e.target.getAttribute('href') && e.target.getAttribute('href').startsWith('#')) {
-        const href = e.target.getAttribute('href');
-        const pageId = href.substring(1);
-        
-        // Prüfe ob die Seite existiert
-        if (document.getElementById(pageId)) {
+    navLinkElements.forEach(link => {
+        link.addEventListener('click', function(e) {
             e.preventDefault();
+            const href = this.getAttribute('href');
+            if (!href || href === '#') return;
             
-            // Gleiche Navigation wie bei nav-links
+            const pageId = href.substring(1);
+            
+            // Prüfe ob die Seite existiert
+            if (!document.getElementById(pageId)) return;
+            
+            // Füge eine Klasse für die Übergangsanimation hinzu
             document.body.classList.add('page-transitioning');
             
+            // Verhindere Doppelanklicken während der Navigation
+            if (this.classList.contains('navigating')) return;
+            this.classList.add('navigating');
+            
+            // Kurzer Timeout für den Übergang
             setTimeout(() => {
-                // Navigation aktualisieren
-                document.querySelectorAll('.nav-link').forEach(navLink => {
-                    navLink.classList.remove('active');
-                    if (navLink.getAttribute('href') === href) {
-                        navLink.classList.add('active');
-                    }
+                // Navigation aktualisieren (nur nav-links, nicht footer-links)
+                document.querySelectorAll('.nav-link').forEach(innerLink => {
+                    innerLink.classList.remove('active', 'navigating');
                 });
                 pages.forEach(page => page.classList.remove('active'));
                 
-                // Aktive Seite setzen
+                // Aktive Elemente setzen
+                if (this.classList.contains('nav-link')) {
+                    this.classList.add('active');
+                }
                 document.getElementById(pageId).classList.add('active');
                 
-                // Mobile-Menü schließen falls offen
+                // Mobile-Menü schließen
                 navLinks.classList.remove('active');
                 mobileMenuToggle.innerHTML = '<i class="fas fa-bars"></i>';
                 mobileMenuToggle.setAttribute('aria-expanded', 'false');
@@ -682,15 +636,62 @@ document.addEventListener('click', function(e) {
                     document.body.classList.remove('page-transitioning');
                 }, 50);
             }, 10);
-        }
-    }
-});
+        });
+    });
 
-    // Formular-Handling
+    // NEUE FUNKTION: Links innerhalb der Seiteninhalte behandeln
+    document.addEventListener('click', function(e) {
+        // Prüfe ob das geklickte Element ein interner Link ist
+        if (e.target.tagName === 'A' && e.target.getAttribute('href') && e.target.getAttribute('href').startsWith('#')) {
+            const href = e.target.getAttribute('href');
+            const pageId = href.substring(1);
+            
+            // Prüfe ob die Seite existiert
+            if (document.getElementById(pageId)) {
+                e.preventDefault();
+                
+                // Gleiche Navigation wie bei nav-links
+                document.body.classList.add('page-transitioning');
+                
+                setTimeout(() => {
+                    // Navigation aktualisieren
+                    document.querySelectorAll('.nav-link').forEach(navLink => {
+                        navLink.classList.remove('active');
+                        if (navLink.getAttribute('href') === href) {
+                            navLink.classList.add('active');
+                        }
+                    });
+                    pages.forEach(page => page.classList.remove('active'));
+                    
+                    // Aktive Seite setzen
+                    document.getElementById(pageId).classList.add('active');
+                    
+                    // Mobile-Menü schließen falls offen
+                    navLinks.classList.remove('active');
+                    mobileMenuToggle.innerHTML = '<i class="fas fa-bars"></i>';
+                    mobileMenuToggle.setAttribute('aria-expanded', 'false');
+                    mobileMenuToggle.setAttribute('aria-label', 'Menü öffnen');
+                    
+                    // Sanftes Scrollen nach oben
+                    window.scrollTo({
+                        top: 0,
+                        behavior: 'smooth'
+                    });
+                    
+                    // Animation beenden
+                    setTimeout(() => {
+                        document.body.classList.remove('page-transitioning');
+                    }, 50);
+                }, 10);
+            }
+        }
+    });
+
+    // ===== TALLY FORMULAR-INTEGRATION (ERSETZT DEN ALTEN FORMULAR-CODE) =====
     const forms = document.querySelectorAll('#bookingForm, #rentForm, #contactForm');
     
     forms.forEach(form => {
-        form.addEventListener('submit', function(e) {
+        form.addEventListener('submit', async function(e) {
             e.preventDefault();
             
             const submitBtn = form.querySelector('.submit-btn');
@@ -700,41 +701,84 @@ document.addEventListener('click', function(e) {
             submitBtn.disabled = true;
             submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Wird gesendet...';
             
-            // Simulate form submission (replace with actual form handling)
-            setTimeout(() => {
-                // Remove existing messages
-                const existingMessage = form.querySelector('.form-message');
-                if (existingMessage) {
-                    existingMessage.remove();
+            try {
+                // Sammle Formulardaten
+                const formData = new FormData(form);
+                
+                // Bestimme welches Tally-Formular verwendet werden soll
+                let tallyUrl;
+                if (form.id === 'bookingForm') tallyUrl = TALLY_FORMS.booking;
+                else if (form.id === 'rentForm') tallyUrl = TALLY_FORMS.rent;
+                else if (form.id === 'contactForm') tallyUrl = TALLY_FORMS.contact;
+                
+                // Sende an Tally (verstecktes Submit)
+                const hiddenForm = document.createElement('form');
+                hiddenForm.style.display = 'none';
+                hiddenForm.method = 'POST';
+                hiddenForm.action = tallyUrl;
+                
+                // Kopiere alle Felder
+                for (let [key, value] of formData.entries()) {
+                    const input = document.createElement('input');
+                    input.type = 'hidden';
+                    input.name = key;
+                    input.value = value;
+                    hiddenForm.appendChild(input);
                 }
                 
-                // Add success message
-                const successMessage = document.createElement('div');
-                successMessage.className = 'form-message success';
+                document.body.appendChild(hiddenForm);
+                hiddenForm.submit();
+                document.body.removeChild(hiddenForm);
                 
-                if (form.id === 'contactForm') {
-                    successMessage.innerHTML = '<i class="fas fa-check-circle"></i> Vielen Dank für Ihre Nachricht! Ich melde mich schnellstmöglich bei Ihnen.';
-                } else {
-                    successMessage.innerHTML = '<i class="fas fa-check-circle"></i> Vielen Dank! Ihre Anfrage wurde erfolgreich gesendet. Wir melden uns innerhalb von 48 Stunden bei Ihnen.';
-                }
-                
-                form.insertBefore(successMessage, form.firstChild);
+                // Zeige Erfolgs-Nachricht auf Ihrer Seite
+                showSuccessMessage(form);
                 
                 // Reset form
                 form.reset();
                 
-                // Reset button
-                submitBtn.disabled = false;
-                submitBtn.innerHTML = originalText;
-                
-                // Scroll to success message
-                successMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                
-            }, 2000);
+            } catch (error) {
+                console.error('Fehler beim Senden:', error);
+                showErrorMessage(form);
+            }
+            
+            // Reset button
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = originalText;
         });
     });
     
-    // Date input minimum value (today)
+    // Erfolgs-Nachricht anzeigen (behält Ihr Design bei)
+    function showSuccessMessage(form) {
+        // Remove existing messages
+        const existingMessage = form.querySelector('.form-message');
+        if (existingMessage) {
+            existingMessage.remove();
+        }
+        
+        // Add success message
+        const successMessage = document.createElement('div');
+        successMessage.className = 'form-message success';
+        
+        if (form.id === 'contactForm') {
+            successMessage.innerHTML = '<i class="fas fa-check-circle"></i> Vielen Dank für Ihre Nachricht! Ich melde mich schnellstmöglich bei Ihnen.';
+        } else {
+            successMessage.innerHTML = '<i class="fas fa-check-circle"></i> Vielen Dank! Ihre Anfrage wurde erfolgreich gesendet. Wir melden uns innerhalb von 48 Stunden bei Ihnen.';
+        }
+        
+        form.insertBefore(successMessage, form.firstChild);
+        
+        // Scroll to success message
+        successMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+    
+    function showErrorMessage(form) {
+        const errorMessage = document.createElement('div');
+        errorMessage.className = 'form-message error';
+        errorMessage.innerHTML = '<i class="fas fa-exclamation-circle"></i> Es gab einen Fehler beim Senden. Bitte versuchen Sie es erneut oder kontaktieren Sie uns direkt.';
+        form.insertBefore(errorMessage, form.firstChild);
+    }
+    
+    // Date input minimum value (today) - BLEIBT UNVERÄNDERT
     const dateInputs = document.querySelectorAll('input[type="date"]');
     const today = new Date().toISOString().split('T')[0];
     dateInputs.forEach(input => {
