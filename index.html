@@ -90,7 +90,7 @@
                             <div class="contact-form-container">
                                 <div class="contact-form">
                                     <h3 style="color: var(--accent-color); margin-bottom: 1.5rem; text-align: center;">Booking Anfrage</h3>
-                                    <form id="bookingForm" action="YOUR_TALLY_BOOKING_FORM_URL" method="POST">
+                                    <form id="bookingForm" action="#" method="POST">
                                         <div class="form-row">
                                             <div class="form-group">
                                                 <label for="booking-name">Name *</label>
@@ -187,7 +187,7 @@
                             <div class="contact-form-container">
                                 <div class="contact-form">
                                     <h3 style="color: var(--accent-color); margin-bottom: 1.5rem; text-align: center;">Equipment Anfrage</h3>
-                                    <form id="rentForm" action="YOUR_TALLY_RENT_FORM_URL" method="POST">
+                                    <form id="rentForm" action="#" method="POST">
                                         <div class="form-row">
                                             <div class="form-group">
                                                 <label for="rent-name">Name *</label>
@@ -470,7 +470,7 @@
                         <div class="contact-form-container">
                             <div class="contact-form">
                                 <h3 style="color: var(--accent-color); margin-bottom: 1.5rem; text-align: center;">Allgemeine Anfrage</h3>
-                                <form id="contactForm" action="YOUR_TALLY_CONTACT_FORM_URL" method="POST">
+                                <form id="contactForm" action="#" method="POST">
                                     <div class="form-row">
                                         <div class="form-group">
                                             <label for="contact-name">Name *</label>
@@ -521,14 +521,10 @@
 
 document.addEventListener('DOMContentLoaded', function() {
     
-    // Tally Form URLs - ersetzen Sie diese mit Ihren echten URLs
-    const TALLY_FORMS = {
-        booking: 'https://tally.so/r/YOUR_BOOKING_FORM_ID',
-        rent: 'https://tally.so/r/YOUR_RENT_FORM_ID', 
-        contact: 'https://tally.so/r/YOUR_CONTACT_FORM_ID'
-    };
+    // Google Apps Script URL - ERSETZEN SIE DIESE URL MIT IHRER APPS SCRIPT URL
+    const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyWrgmK5_0jXPIojXtC_8cv8hy4eVxhv7nrKVJWlXp39VVNeK7iYS6w9f47Gad9fovi/exec';
 
-    // Mobile menu toggle with immediate display (no animation)
+    // Mobile menu toggle
     const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
     const navLinks = document.querySelector('.nav-links');
     
@@ -536,7 +532,6 @@ document.addEventListener('DOMContentLoaded', function() {
         navLinks.classList.toggle('active');
         const isExpanded = navLinks.classList.contains('active');
         mobileMenuToggle.setAttribute('aria-expanded', isExpanded);
-        // Change icon based on menu state
         if (isExpanded) {
             this.innerHTML = '<i class="fas fa-times"></i>';
             this.setAttribute('aria-label', 'Menü schließen');
@@ -546,29 +541,13 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     
-    // Optimierte Navigation mit besserer Performance
+    // Navigation
     const navLinkElements = document.querySelectorAll('.nav-link, .footer-link');
     const pages = document.querySelectorAll('.page');
-    
-    // Cache für vorgeladene Seiten
-    const pageCache = {};
-    
-    // Vorlade-Funktion für die Seiteninhalte
-    function preloadPages() {
-        pages.forEach(page => {
-            const pageId = page.id;
-            // Seite im Cache speichern
-            pageCache[pageId] = page;
-        });
-    }
-    
-    // Führe das Vorladen aus
-    preloadPages();
     
     // Back to top button
     const backToTopButton = document.querySelector('.back-to-top');
     
-    // Show back to top button when scrolling down
     window.addEventListener('scroll', function() {
         if (window.scrollY > 300) {
             backToTopButton.classList.add('visible');
@@ -577,7 +556,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     
-    // Scroll to top when clicking the button
     backToTopButton.addEventListener('click', function(e) {
         e.preventDefault();
         window.scrollTo({
@@ -586,7 +564,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
     
-    // Optimierte Navigation mit Übergang
+    // Navigation
     navLinkElements.forEach(link => {
         link.addEventListener('click', function(e) {
             e.preventDefault();
@@ -594,44 +572,34 @@ document.addEventListener('DOMContentLoaded', function() {
             if (!href || href === '#') return;
             
             const pageId = href.substring(1);
-            
-            // Prüfe ob die Seite existiert
             if (!document.getElementById(pageId)) return;
             
-            // Füge eine Klasse für die Übergangsanimation hinzu
             document.body.classList.add('page-transitioning');
             
-            // Verhindere Doppelanklicken während der Navigation
             if (this.classList.contains('navigating')) return;
             this.classList.add('navigating');
             
-            // Kurzer Timeout für den Übergang
             setTimeout(() => {
-                // Navigation aktualisieren (nur nav-links, nicht footer-links)
                 document.querySelectorAll('.nav-link').forEach(innerLink => {
                     innerLink.classList.remove('active', 'navigating');
                 });
                 pages.forEach(page => page.classList.remove('active'));
                 
-                // Aktive Elemente setzen
                 if (this.classList.contains('nav-link')) {
                     this.classList.add('active');
                 }
                 document.getElementById(pageId).classList.add('active');
                 
-                // Mobile-Menü schließen
                 navLinks.classList.remove('active');
                 mobileMenuToggle.innerHTML = '<i class="fas fa-bars"></i>';
                 mobileMenuToggle.setAttribute('aria-expanded', 'false');
                 mobileMenuToggle.setAttribute('aria-label', 'Menü öffnen');
                 
-                // Sanftes Scrollen nach oben
                 window.scrollTo({
                     top: 0,
                     behavior: 'smooth'
                 });
                 
-                // Animation beenden
                 setTimeout(() => {
                     document.body.classList.remove('page-transitioning');
                 }, 50);
@@ -639,22 +607,18 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // NEUE FUNKTION: Links innerhalb der Seiteninhalte behandeln
+    // Internal links handling
     document.addEventListener('click', function(e) {
-        // Prüfe ob das geklickte Element ein interner Link ist
         if (e.target.tagName === 'A' && e.target.getAttribute('href') && e.target.getAttribute('href').startsWith('#')) {
             const href = e.target.getAttribute('href');
             const pageId = href.substring(1);
             
-            // Prüfe ob die Seite existiert
             if (document.getElementById(pageId)) {
                 e.preventDefault();
                 
-                // Gleiche Navigation wie bei nav-links
                 document.body.classList.add('page-transitioning');
                 
                 setTimeout(() => {
-                    // Navigation aktualisieren
                     document.querySelectorAll('.nav-link').forEach(navLink => {
                         navLink.classList.remove('active');
                         if (navLink.getAttribute('href') === href) {
@@ -663,22 +627,18 @@ document.addEventListener('DOMContentLoaded', function() {
                     });
                     pages.forEach(page => page.classList.remove('active'));
                     
-                    // Aktive Seite setzen
                     document.getElementById(pageId).classList.add('active');
                     
-                    // Mobile-Menü schließen falls offen
                     navLinks.classList.remove('active');
                     mobileMenuToggle.innerHTML = '<i class="fas fa-bars"></i>';
                     mobileMenuToggle.setAttribute('aria-expanded', 'false');
                     mobileMenuToggle.setAttribute('aria-label', 'Menü öffnen');
                     
-                    // Sanftes Scrollen nach oben
                     window.scrollTo({
                         top: 0,
                         behavior: 'smooth'
                     });
                     
-                    // Animation beenden
                     setTimeout(() => {
                         document.body.classList.remove('page-transitioning');
                     }, 50);
@@ -687,7 +647,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // ===== TALLY FORMULAR-INTEGRATION (ERSETZT DEN ALTEN FORMULAR-CODE) =====
+    // ===== GOOGLE APPS SCRIPT FORMULAR-INTEGRATION =====
     const forms = document.querySelectorAll('#bookingForm, #rentForm, #contactForm');
     
     forms.forEach(form => {
@@ -705,36 +665,47 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Sammle Formulardaten
                 const formData = new FormData(form);
                 
-                // Bestimme welches Tally-Formular verwendet werden soll
-                let tallyUrl;
-                if (form.id === 'bookingForm') tallyUrl = TALLY_FORMS.booking;
-                else if (form.id === 'rentForm') tallyUrl = TALLY_FORMS.rent;
-                else if (form.id === 'contactForm') tallyUrl = TALLY_FORMS.contact;
+                // Bestimme Formular-Typ
+                let formType;
+                if (form.id === 'bookingForm') formType = 'booking';
+                else if (form.id === 'rentForm') formType = 'rent';
+                else if (form.id === 'contactForm') formType = 'contact';
                 
-                // Sende an Tally (verstecktes Submit)
-                const hiddenForm = document.createElement('form');
-                hiddenForm.style.display = 'none';
-                hiddenForm.method = 'POST';
-                hiddenForm.action = tallyUrl;
+                // Konvertiere FormData zu URLSearchParams für Google Apps Script
+                const params = new URLSearchParams();
+                params.append('form_type', formType);
                 
-                // Kopiere alle Felder
+                // Alle Formularfelder hinzufügen
                 for (let [key, value] of formData.entries()) {
-                    const input = document.createElement('input');
-                    input.type = 'hidden';
-                    input.name = key;
-                    input.value = value;
-                    hiddenForm.appendChild(input);
+                    params.append(key, value);
                 }
                 
-                document.body.appendChild(hiddenForm);
-                hiddenForm.submit();
-                document.body.removeChild(hiddenForm);
+                // Spezielle Behandlung für Checkboxen (Equipment)
+                if (formType === 'rent') {
+                    const equipmentCheckboxes = form.querySelectorAll('input[name="equipment"]:checked');
+                    const equipmentValues = Array.from(equipmentCheckboxes).map(cb => cb.value);
+                    if (equipmentValues.length > 0) {
+                        params.set('equipment', equipmentValues.join(', '));
+                    }
+                }
                 
-                // Zeige Erfolgs-Nachricht auf Ihrer Seite
-                showSuccessMessage(form);
+                // Request an Google Apps Script senden
+                const response = await fetch(APPS_SCRIPT_URL, {
+                    method: 'POST',
+                    body: params,
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    }
+                });
                 
-                // Reset form
-                form.reset();
+                const result = await response.json();
+                
+                if (result.success) {
+                    showSuccessMessage(form);
+                    form.reset();
+                } else {
+                    throw new Error(result.error || 'Unbekannter Fehler');
+                }
                 
             } catch (error) {
                 console.error('Fehler beim Senden:', error);
@@ -747,38 +718,39 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
     
-    // Erfolgs-Nachricht anzeigen (behält Ihr Design bei)
+    // Success message function
     function showSuccessMessage(form) {
-        // Remove existing messages
         const existingMessage = form.querySelector('.form-message');
         if (existingMessage) {
             existingMessage.remove();
         }
         
-        // Add success message
         const successMessage = document.createElement('div');
         successMessage.className = 'form-message success';
         
         if (form.id === 'contactForm') {
             successMessage.innerHTML = '<i class="fas fa-check-circle"></i> Vielen Dank für Ihre Nachricht! Ich melde mich schnellstmöglich bei Ihnen.';
         } else {
-            successMessage.innerHTML = '<i class="fas fa-check-circle"></i> Vielen Dank! Ihre Anfrage wurde erfolgreich gesendet. Wir melden uns innerhalb von 48 Stunden bei Ihnen.';
+            successMessage.innerHTML = '<i class="fas fa-check-circle"></i> Vielen Dank! Ihre Anfrage wurde erfolgreich gesendet.  Ich melde mich schnellstmöglich bei Ihnen.';
         }
         
         form.insertBefore(successMessage, form.firstChild);
-        
-        // Scroll to success message
         successMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
     
     function showErrorMessage(form) {
+        const existingMessage = form.querySelector('.form-message');
+        if (existingMessage) {
+            existingMessage.remove();
+        }
+        
         const errorMessage = document.createElement('div');
         errorMessage.className = 'form-message error';
         errorMessage.innerHTML = '<i class="fas fa-exclamation-circle"></i> Es gab einen Fehler beim Senden. Bitte versuchen Sie es erneut oder kontaktieren Sie uns direkt.';
         form.insertBefore(errorMessage, form.firstChild);
     }
     
-    // Date input minimum value (today) - BLEIBT UNVERÄNDERT
+    // Date input minimum value (today)
     const dateInputs = document.querySelectorAll('input[type="date"]');
     const today = new Date().toISOString().split('T')[0];
     dateInputs.forEach(input => {
